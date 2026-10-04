@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Little Feeds</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#7fa88f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><script src="config.js"></script>
+<style>
+:root{--bg:#faf6f0;--card:#fffdf9;--ink:#3b3a37;--mute:#8c867c;--line:#eee6da;--acc:#7fa88f;--accd:#5e8a6f;--soft:#e6f0e9;--warm:#f6d9c6;--warn:#c9774f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1f1c;--card:#262925;--ink:#ecebe6;--mute:#9a9a91;--line:#33372f;--accd:#9cc4ab;--soft:#2c3a31;--warm:#4a3a30;--warn:#e29a74}}
+:root[data-theme="dark"]{--bg:#1d1f1c;--card:#262925;--ink:#ecebe6;--mute:#9a9a91;--line:#33372f;--accd:#9cc4ab;--soft:#2c3a31;--warm:#4a3a30;--warn:#e29a74}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito",-apple-system,"Segoe UI",system-ui,sans-serif;line-height:1.4}
+.wrap{max-width:460px;margin:0 auto;padding:14px 16px 150px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+h1{font-size:21px;margin:0}
+.icon{background:none;border:0;font-size:20px;color:var(--mute);padding:8px;cursor:pointer}
+.fl{display:inline-block;animation:fl 4s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-4px) rotate(4deg)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;margin-bottom:14px}
+.status{text-align:center}.status.soon{background:var(--warm)}.status.over{background:var(--warm);border-color:var(--warn)}
+.lbl{font-size:13px;color:var(--mute);margin-bottom:6px}.lbl small{opacity:.8}
+.big{font-size:40px;font-weight:700;letter-spacing:-1px}
+.bar{height:6px;border-radius:6px;background:var(--line);overflow:hidden;margin:10px 0 8px}
+.bar i{display:block;height:100%;background:var(--acc);width:0;transition:width 1s}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.chip{flex:1 1 auto;min-width:60px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:13px 8px;font:inherit;font-size:15px;cursor:pointer;text-align:center}
+.chip.on{background:var(--soft);border-color:var(--acc);color:var(--accd);font-weight:700}
+.chip.sm{padding:8px;font-size:13px;border-radius:12px}
+.sec{margin-top:16px}.hint{font-size:13px;color:var(--accd);margin-top:8px}
+.stepper{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px}
+.stepper button{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font-size:22px;cursor:pointer}
+.stepper input{width:90px;font:inherit;font-size:30px;font-weight:700;text-align:center;border:0;border-bottom:2px solid var(--line);background:none;color:var(--ink)}
+.stepper span{color:var(--mute)}
+.sw{display:flex;align-items:center;gap:10px}.sw b{font-size:30px;flex:1;font-variant-numeric:tabular-nums}.sw .chip{flex:0 0 auto}
+.save{width:100%;margin-top:18px;border:0;border-radius:18px;background:var(--acc);color:#fff;font:inherit;font-size:17px;font-weight:700;padding:16px;cursor:pointer}
+.save:disabled{opacity:.4}
+input[type=time],.tx{font:inherit;padding:10px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);margin-top:8px}
+.tx{flex:1 1 120px;margin:0}
+.hist{display:flex;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.hist:last-child{border:0}
+.hist .t{width:72px;color:var(--mute);font-size:14px}.hist .d{flex:1;font-size:14px}
+.hist button{background:none;border:0;color:var(--mute);font-size:17px;padding:4px 8px;cursor:pointer}
+.sum{display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px}
+.empty{color:var(--mute);text-align:center;padding:10px;font-size:14px}
+.big3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.big3 .chip{padding:22px 4px;font-size:15px}.big3 .chip span{display:block;font-size:28px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tile{background:var(--soft);border-radius:16px;padding:10px;text-align:center}.tile b{display:block;font-size:22px}.tile small{font-size:11px;color:var(--mute)}
+.bars{display:flex;gap:6px;align-items:flex-end;height:120px;overflow-x:auto}.bars div{flex:1;min-width:22px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:3px}
+.bars i{display:block;width:100%;background:var(--acc);border-radius:6px 6px 2px 2px;min-height:2px}.bars small{font-size:11px;color:var(--mute)}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{background:none;border:0;color:var(--mute);font:inherit;font-size:11px;padding:4px 8px;cursor:pointer;border-radius:12px}
+nav button span{display:block;font-size:22px}nav button.on{color:var(--accd);font-weight:700;background:var(--soft)}
+.fab{position:fixed;right:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;border:0;background:var(--acc);color:#fff;font-size:24px;box-shadow:0 4px 14px rgba(0,0,0,.2);cursor:pointer}
+.sheet{position:fixed;left:12px;right:12px;bottom:calc(80px + env(safe-area-inset-bottom,0px));max-width:436px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:0 6px 24px rgba(0,0,0,.18)}
+.sheet textarea{width:100%;font:inherit;border:1.5px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px;background:var(--bg);color:var(--ink)}
+.toast{position:fixed;left:16px;right:16px;bottom:calc(150px + env(safe-area-inset-bottom,0px));max-width:428px;margin:0 auto;background:var(--ink);color:var(--bg);border-radius:16px;padding:12px 16px;display:flex;justify-content:space-between;gap:10px;font-size:14px;transform:translateY(300%);transition:transform .3s}
+.toast.show{transform:none}.toast button{background:none;border:0;color:var(--bg);font:inherit;font-weight:700;text-decoration:underline}
+.bu{position:fixed;bottom:130px;font-size:26px;pointer-events:none;animation:up 1.2s ease-out both}
+@keyframes up{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-160px) scale(1.4)}}
+.link{background:none;border:0;color:var(--accd);font:inherit;font-size:14px;text-decoration:underline;margin-top:10px;cursor:pointer}
+.note{font-size:12px;color:var(--mute);text-align:center}
+.hide{display:none}
+</style></head>
+<body><div class="wrap"><header id="hd"></header><div id="main"></div></div>
+<button class="fab" onclick="vOpen()" aria-label="Voice entry">🎤</button>
+<div class="sheet hide" id="vs"><div class="lbl" id="vst"></div>
+<textarea id="vt" rows="3" placeholder="Say or type: “Fed from right breast, topped up with 30 ml formula via paladai 20 minutes ago”"></textarea>
+<div class="row"><button class="chip sm" onclick="vMic()">🎤 Speak</button><button class="chip sm on" onclick="vGo()">Log it</button><button class="chip sm" onclick="vClose()">Close</button></div></div>
+<div class="toast" id="toast"><span id="tmsg"></span><button onclick="undo()">Undo</button></div>
+<nav id="tabs"></nav>
+<script>
+const $=id=>document.getElementById(id);
+const E=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const D={baby:{name:'',dob:'',kg:''},fi:180,pi:180,lead:15,log:[],ss:null,nt:{},me:'',fam:'',cu:0,sy:{pushed:0,pulled:0}};
+let st=D;
+try{const r=localStorage.getItem('feedlog2');if(r)st=Object.assign({},D,JSON.parse(r));else{const o=JSON.parse(localStorage.getItem('feedlog')||'null');if(o&&o.feeds)st=Object.assign({},D,{fi:o.interval||180,lead:o.lead||15,log:o.feeds.map(f=>({id:f.id,t:f.t,cat:'feed',sides:f.type==='L'?['L']:f.type==='R'?['R']:f.type==='B'?['L','R']:[],bottle:f.type==='F'?{ml:f.ml||0,milk:'formula',via:'bottle'}:null}))})}}catch(e){}
+const persist=()=>{try{localStorage.setItem('feedlog2',JSON.stringify(st))}catch(e){}};
+const live=()=>st.log.filter(e=>!e.del);
+function norm(e){if(e.cat==='feed'||e.cat==='pump')e.sides=Array.isArray(e.sides)?e.sides:Object.values(e.sides||{});return e}
+st.log.forEach(e=>{if(!e.u)e.u=e.t||1;norm(e)});
+let u={tab:'feed',r:'7',set:false,f:{s:[],b:false,ml:90,milk:'formula',via:'bottle'},p:{s:[],ml:60},w:{off:0,c:false,time:''},sw:{run:false,start:0,acc:0}},lastId=null,tt,rec;
+const TABS=[['feed','🤱','Feed'],['pump','💧','Pump'],['diaper','🧷','Diaper'],['sleep','🌙','Sleep'],['ins','📊','Insights']];
+const id=()=>'e'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+const fmt=t=>new Date(t).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
+const dur=ms=>{const m=Math.round(Math.abs(ms)/6e4),h=Math.floor(m/60);return h?`${h}h ${m%60}m`:`${m}m`};
+const mmss=ms=>{const s=Math.floor(ms/1000);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
+const sideL=s=>s.length>1?'Both breasts':s[0]==='L'?'Left':'Right';
+const ch=(l,on,js,c='')=>`<button class="chip ${c} ${on?'on':''}" onclick="${js}">${l}</button>`;
+function age(){const d=st.baby.dob;if(!d)return'';const days=Math.floor((Date.now()-new Date(d))/864e5);if(days<0)return'';const w=Math.floor(days/7);return w<12?w+(w===1?' wk':' wks'):Math.floor(days/30.44)+' mo'}
+function head(){const b=st.baby,sub=[age(),b.kg&&b.kg+' kg',st.fam&&DB&&(navigator.onLine?'☁️ synced':'📴 offline')].filter(Boolean).join(' · ');$('hd').innerHTML=`<div><h1>${b.name?E(b.name):'Little one'} <span class="fl">🧸</span></h1><div class="lbl">${sub||'Tap ⚙︎ to add age & weight'}</div></div><button class="icon" onclick="u.set=!u.set;render()">⚙︎</button>`}
+function desc(e){
+ if(e.cat==='feed'){const p=[];if(e.sides.length)p.push('🤱 '+sideL(e.sides)+(e.secs?' · '+mmss(e.secs*1000):'')+(e.bml?' · ~'+e.bml+' mL':''));if(e.bottle)p.push('🍼 '+(e.bottle.ml?e.bottle.ml+' mL ':'')+(e.bottle.milk==='ebm'?'expressed milk':'formula')+' · '+e.bottle.via);return p.join('<br>')}
+ if(e.cat==='pump')return '💧 '+(e.sides.length?sideL(e.sides):'Pumped')+(e.ml?' · '+e.ml+' mL':'')+(e.secs?' · '+mmss(e.secs*1000):'');
+ if(e.cat==='diaper')return {wet:'💧 Wet',dirty:'💩 Dirty',both:'💧💩 Wet + dirty'}[e.kind];
+ return '🌙 Slept '+dur(e.end-e.t)}
+function hist(c){const s=new Date();s.setHours(0,0,0,0);const l=live().filter(e=>e.cat===c&&e.t>=s.getTime());return `<div class="card"><div class="sum"><span>Today</span><span>${l.length}</span></div>${l.length?l.map(e=>`<div class="hist"><span class="t">${fmt(e.t)}</span><span class="d">${desc(e)}${e.by&&st.fam?`<br><small style="color:var(--mute)">by ${E(e.by)}</small>`:''}</span><button onclick="delE('${e.id}')" aria-label="Delete">✕</button></div>`).join(''):'<div class="empty">Nothing yet today 🌱</div>'}</div>`}
+const cd=()=>`<div class="card status" id="cd"><div class="lbl" id="sl"></div><div class="big" id="sb"></div><div class="bar"><i id="sp"></i></div><div class="lbl" id="sx"></div></div>`;
+const swNow=()=>u.sw.acc+(u.sw.run?Date.now()-u.sw.start:0);
+function swTog(){if(u.sw.run){u.sw.acc+=Date.now()-u.sw.start;u.sw.run=false}else{u.sw.start=Date.now();u.sw.run=true}render()}
+function swReset(){u.sw={run:false,start:0,acc:0};render()}
+const takeSw=()=>{const s=Math.round(swNow()/1000);u.sw={run:false,start:0,acc:0};return s};
+const swH=()=>`<div class="sw"><span class="fl">⏱</span><b id="sw">${mmss(swNow())}</b>${ch(u.sw.run?'Pause':u.sw.acc?'Resume':'Start',0,'swTog()','sm')}${u.sw.acc||u.sw.run?ch('Reset',0,'swReset()','sm'):''}</div>`;
+const whenH=()=>`<div class="sec"><div class="lbl">When?</div><div class="row">${[[0,'Just now'],[5,'5 min ago'],[10,'10 min'],[20,'20 min']].map(([v,l])=>ch(l,!u.w.c&&u.w.off===v,`setW(${v})`,'sm')).join('')}${ch('Other…',u.w.c,'setW(-1)','sm')}</div>${u.w.c?`<input type="time" value="${u.w.time}" oninput="u.w.time=this.value">`:''}</div>`;
+function setW(v){if(v<0){u.w.c=true;if(!u.w.time)u.w.time=new Date().toTimeString().slice(0,5)}else{u.w.c=false;u.w.off=v}render()}
+function getT(){if(u.w.c&&u.w.time){const [h,m]=u.w.time.split(':'),d=new Date();d.setHours(+h,+m,0,0);if(d>new Date())d.setDate(d.getDate()-1);return d.getTime()}return Date.now()-u.w.off*6e4}
+const resetW=()=>{u.w={off:0,c:false,time:''}};
+const mlH=k=>`<div class="stepper"><button onclick="stp('${k}',-5)">−</button><input type="number" inputmode="numeric" step="5" min="0" value="${u[k].ml}" oninput="u['${k}'].ml=+this.value"><span>mL</span><button onclick="stp('${k}',5)">+</button></div><div class="row">${[30,60,90,120,150].map(n=>ch(n,u[k].ml===n,`u.${k}.ml=${n};render()`,'sm')).join('')}</div>`;
+const stp=(k,d)=>{u[k].ml=Math.max(0,(+u[k].ml||0)+d);render()};
+function tg(k,x){const a=u[k].s,i=a.indexOf(x);i<0?a.push(x):a.splice(i,1);render()}
+function pFeed(){const f=u.f,lb=live().find(e=>e.cat==='feed'&&e.sides.length===1),ok=f.s.length||f.b;
+ return cd()+`<div class="card"><div class="lbl">What was fed? <small>(pick all that apply)</small></div><div class="row">${ch('🤱 Left',f.s.includes('L'),"tg('f','L')")}${ch('🤱 Right',f.s.includes('R'),"tg('f','R')")}${ch('🍼 Bottle / cup',f.b,"u.f.b=!u.f.b;render()")}</div>${lb&&!f.s.length?`<div class="hint">Last breast was ${lb.sides[0]==='L'?'left':'right'} — start with ${lb.sides[0]==='L'?'right':'left'} this time</div>`:''}
+ ${f.s.length?`<div class="sec"><div class="lbl">Breast feed timer</div>${swH()}</div>`:''}
+ ${f.b?`<div class="sec"><div class="lbl">What was in it?</div><div class="row">${ch('Formula',f.milk==='formula',"u.f.milk='formula';render()",'sm')}${ch('Expressed milk',f.milk==='ebm',"u.f.milk='ebm';render()",'sm')}</div></div><div class="sec"><div class="lbl">Given with</div><div class="row">${[['bottle','Bottle'],['paladai','Paladai'],['cup','Nifty cup']].map(([v,l])=>ch(l,f.via===v,`u.f.via='${v}';render()`,'sm')).join('')}</div></div><div class="sec">${mlH('f')}</div>`:''}
+ ${whenH()}<button class="save" ${ok?'':'disabled'} onclick="saveFeed()">Save feed</button></div>`+hist('feed')}
+function saveFeed(){const f=u.f,e={id:id(),t:getT(),cat:'feed',sides:[...f.s]},secs=f.s.length?takeSw():0;if(secs)e.secs=secs;if(f.b)e.bottle={ml:+f.ml||0,milk:f.milk,via:f.via};u.f.s=[];u.f.b=false;resetW();add(e)}
+function pPump(){const p=u.p;return cd()+`<div class="card"><div class="lbl">Which side?</div><div class="row">${ch('💧 Left',p.s.includes('L'),"tg('p','L')")}${ch('💧 Right',p.s.includes('R'),"tg('p','R')")}</div><div class="sec"><div class="lbl">Pump timer</div>${swH()}</div><div class="sec"><div class="lbl">How much?</div>${mlH('p')}</div>${whenH()}<button class="save" onclick="savePump()">Save pumping</button></div>`+hist('pump')}
+function savePump(){const p=u.p,e={id:id(),t:getT(),cat:'pump',sides:[...p.s],ml:+p.ml||0},secs=takeSw();if(secs)e.secs=secs;p.s=[];resetW();add(e)}
+function pDia(){return `<div class="card">${'<div class="lbl">Tap to log</div>'}<div class="big3">${[['wet','💧','Wet'],['dirty','💩','Dirty'],['both','💧💩','Both']].map(([k,i,l])=>`<button class="chip" onclick="dia('${k}')"><span>${i}</span>${l}</button>`).join('')}</div>${whenH()}</div>`+hist('diaper')}
+function dia(k){const e={id:id(),t:getT(),cat:'diaper',kind:k};resetW();add(e)}
+function pSleep(){return (st.ss?`<div class="card status"><div class="lbl">Sleeping 😴</div><div class="big" id="sd">${dur(Date.now()-st.ss)}</div><button class="save" onclick="wake()">☀️ Baby woke up</button></div>`:`<div class="card"><button class="save" style="margin:0" onclick="st.ss=Date.now();touch();render()">🌙 Baby fell asleep</button></div>`)+hist('sleep')}
+function wake(){const e={id:id(),t:st.ss,cat:'sleep',end:Date.now()};st.ss=null;st.cu=Date.now();add(e)}
+function pSet(){const b=st.baby,ivs=(k,a)=>a.map(([v,l])=>ch(l,st[k]===v,`st.${k}=${v};st.nt={};touch();render()`,'sm')).join('');
+ return `<div class="card"><div class="lbl">Baby</div><div class="row"><input class="tx" placeholder="Name" value="${E(b.name)}" oninput="st.baby.name=this.value;touch();head()"><input class="tx" type="date" value="${E(b.dob)}" onchange="st.baby.dob=this.value;touch();render()"><input class="tx" type="number" step="0.05" min="0" placeholder="Weight (kg)" value="${E(b.kg)}" oninput="st.baby.kg=this.value;touch();head()"></div>
+ <div class="sec"><div class="lbl">Time between feeds</div><div class="row">${ivs('fi',[[120,'2h'],[150,'2.5h'],[180,'3h'],[240,'4h']])}</div></div>
+ <div class="sec"><div class="lbl">Time between pumping</div><div class="row">${ivs('pi',[[120,'2h'],[180,'3h'],[240,'4h']])}</div></div>
+ <div class="sec"><div class="lbl">Remind me before</div><div class="row">${ivs('lead',[[10,'10 min'],[15,'15 min'],[30,'30 min']])}</div></div>
+ <div class="sec"><div class="lbl">Partner sync</div>${!DB?'<div class="note">Sync isn’t set up in this copy yet (see README).</div>':st.fam?`<div class="note" id="sy">${E(sMsg)}</div><div class="row" style="margin-top:8px"><button class="chip sm on" onclick="shareFam()">Share invite link</button><button class="chip sm" onclick="leaveFam()">Stop syncing</button></div><div class="note" style="margin-top:6px">Family code: <b>${E(st.fam)}</b></div>`:`<button class="chip sm on" style="width:100%" onclick="newFam()">Create a family</button><div class="row" style="margin-top:8px"><input class="tx" id="jc" placeholder="Or enter family code"><button class="chip sm" onclick="joinFam($('jc').value)">Join</button></div>`}<div class="row" style="margin-top:8px"><input class="tx" placeholder="Your name (shown on entries)" value="${E(st.me)}" oninput="st.me=this.value;persist()"></div></div>
+ <button class="link" onclick="notifOn(this)">Turn on notifications</button></div>`}
+async function notifOn(b){try{const p=await Notification.requestPermission();b.textContent=p==='granted'?'Notifications on ✓':'Notifications blocked'}catch(e){b.textContent='Notifications unavailable here'}}
+function tile(i,v,l){return `<div class="tile">${i}<b>${v}</b><small>${l}</small></div>`}
+function bars(t,v,bk,unit){const mx=Math.max(...v,1);return `<div class="card"><div class="lbl">${t} · ${unit>1?'avg per day, by '+(unit===7?'week':'month'):'per day'}</div><div class="bars">${v.map((x,i)=>`<div><small>${x?(x>=10?Math.round(x):+x.toFixed(1)):''}</small><i style="height:${x/mx*80}px"></i><small>${bk[i].l}</small></div>`).join('')}</div></div>`}
+function pIns(){const L=live(),DAY=864e5,s0=new Date();s0.setHours(0,0,0,0);const T0=s0.getTime(),fd=new Date(L.length?Math.min(...L.map(e=>e.t)):T0);fd.setHours(0,0,0,0);
+ const since=Math.floor((T0-fd.getTime())/DAY)+1,n=u.r==='all'?since:+u.r,days=Math.min(n,since),RS=u.r==='all'?fd.getTime():T0-(n-1)*DAY,unit=n<=31?1:n<=182?7:30,nb=Math.ceil(n/unit);
+ const M={F:e=>e.cat==='feed'?1:0,M:e=>e.cat==='feed'?((e.bottle?e.bottle.ml:0)||0)+(e.bml||0):0,P:e=>e.cat==='pump'?e.ml||0:0,D:e=>e.cat==='diaper'?1:0,S:e=>e.cat==='sleep'?(e.end-e.t)/36e5:0};
+ const sum=(f,a,b)=>L.reduce((x,e)=>e.t>=a&&e.t<b?x+f(e):x,0);
+ const bk=[...Array(nb)].map((_,i)=>{const a=RS+i*unit*DAY;return{a,b:a+unit*DAY,c:Math.max(1,Math.min(unit,Math.round((T0+DAY-a)/DAY))),l:unit===1?(n<=14?'SMTWTFS'[new Date(a).getDay()]:new Date(a).getDate()):new Date(a).toLocaleDateString([],{day:'numeric',month:'short'})}});
+ const ser=f=>bk.map(k=>sum(f,k.a,k.b)/k.c),avg=f=>sum(f,RS,T0+DAY)/days,td=f=>sum(f,T0,T0+DAY),kg=+st.baby.kg,r1=x=>+x.toFixed(1);
+ const rg=[['7','7 days'],['14','14 days'],['30','30 days'],['90','3 months'],['all','All time']];
+ return `<div class="card"><div class="row">${rg.map(([v,l])=>ch(l,u.r===v,`u.r='${v}';render()`,'sm')).join('')}</div></div>
+ <div class="card"><div class="lbl">Today</div><div class="grid">${tile('🍼',td(M.F),'feeds')}${tile('🥛',td(M.M),'mL fed'+(kg&&td(M.M)?` · ${Math.round(td(M.M)/kg)}/kg`:''))}${tile('💧',td(M.P),'mL pumped')}${tile('🧷',td(M.D),'diapers')}${tile('🌙',r1(td(M.S)),'h sleep')}</div></div>
+ <div class="card"><div class="lbl">Daily average · ${rg.find(x=>x[0]===u.r)[1].toLowerCase()} (${days} day${days>1?'s':''} of data)</div><div class="grid">${tile('🍼',r1(avg(M.F)),'feeds')}${tile('🥛',Math.round(avg(M.M)),'mL fed'+(kg&&avg(M.M)?` · ${Math.round(avg(M.M)/kg)}/kg`:''))}${tile('💧',Math.round(avg(M.P)),'mL pumped')}${tile('🧷',r1(avg(M.D)),'diapers')}${tile('🌙',r1(avg(M.S)),'h sleep')}</div>${kg?'':'<div class="note" style="margin-top:8px">Add weight in ⚙︎ to see mL per kg</div>'}</div>`
+ +bars('Feeds',ser(M.F),bk,unit)+bars('Milk fed (mL)',ser(M.M),bk,unit)+bars('Pumped (mL)',ser(M.P),bk,unit)+bars('Diapers',ser(M.D),bk,unit)+bars('Sleep (hours)',ser(M.S),bk,unit)+'<div class="note">Numbers are for your own tracking — your paediatrician knows what’s right for your baby 💛</div>'}
+function add(e){e.u=Date.now();if(st.me)e.by=st.me;st.log.push(e);st.log.sort((a,b)=>b.t-a.t);delete st.nt[e.cat];persist();lastId=e.id;burst();toast(desc(e).replace(/<br>/g,' + ').replace(/<[^>]+>/g,''));render();syncSoon()}
+function delE(i){const e=st.log.find(x=>x.id===i);if(e){e.del=1;e.u=Date.now();persist();syncSoon()}render()}
+function undo(){if(lastId)delE(lastId);$('toast').classList.remove('show')}
+function toast(m){$('tmsg').textContent='Saved · '+m;$('toast').classList.add('show');clearTimeout(tt);tt=setTimeout(()=>$('toast').classList.remove('show'),5000)}
+function burst(){['🍼','💛','⭐','🫧','🌙','🧸'].forEach((c,i)=>{const s=document.createElement('span');s.className='bu';s.textContent=c;s.style.left=(12+Math.random()*70)+'%';s.style.animationDelay=i*70+'ms';document.body.appendChild(s);setTimeout(()=>s.remove(),1600)})}
+function render(){head();$('tabs').innerHTML=TABS.map(([k,i,l])=>`<button class="${u.tab===k?'on':''}" onclick="u.tab='${k}';render()"><span>${i}</span>${l}</button>`).join('');$('main').innerHTML=(u.set?pSet():'')+({feed:pFeed,pump:pPump,diaper:pDia,sleep:pSleep,ins:pIns}[u.tab])();tick()}
+function tick(){const now=Date.now();
+ if(u.tab==='feed'||u.tab==='pump'){const c=u.tab,l=live().find(e=>e.cat===c),iv=(c==='feed'?st.fi:st.pi)*6e4,box=$('cd');if(box){
+  if(!l){box.className='card status';$('sl').textContent=c==='feed'?'No feeds yet':'No pumping yet';$('sb').textContent='—';$('sx').textContent='Log the first one below';$('sp').style.width='0'}
+  else{const left=l.t+iv-now;$('sp').style.width=Math.min(100,(now-l.t)/iv*100)+'%';$('sx').textContent='Last '+(c==='feed'?'fed ':'pumped ')+dur(now-l.t)+' ago';
+   if(left<=0){box.className='card status over';$('sl').textContent=c==='feed'?'Feed is due':'Pump is due';$('sb').textContent=dur(left)+' over'}
+   else if(left<=st.lead*6e4){box.className='card status soon';$('sl').textContent='Coming up';$('sb').textContent='in '+dur(left)}
+   else{box.className='card status';$('sl').textContent='Next '+c+' at '+fmt(l.t+iv);$('sb').textContent='in '+dur(left)}}}}
+ if($('sw'))$('sw').textContent=mmss(swNow());
+ if($('sd')&&st.ss)$('sd').textContent=dur(now-st.ss);
+ ['feed','pump'].forEach(c=>{const l=live().find(e=>e.cat===c);if(!l)return;const left=l.t+(c==='feed'?st.fi:st.pi)*6e4-now;
+  if(left<=st.lead*6e4&&st.nt[c]!==l.id){st.nt[c]=l.id;persist();try{if(Notification.permission==='granted')new Notification(c==='feed'?'Feed time soon 🍼':'Pumping time soon 💧',{body:left>0?'In '+dur(left):'It is time'})}catch(e){}try{navigator.vibrate([200,100,200])}catch(e){}}})}
+/* ---- voice ---- */
+function parse(s){s=s.toLowerCase().replace(/(\d)\s*(?:millilit(?:er|re)s?|mls?|cc)\b/g,'$1ml');let off=0,m,dm=s.match(/for\s+(\d+(?:\.\d+)?)\s*(hours?|hrs?|minutes?|mins?)/);
+ if(m=s.match(/(\d+(?:\.\d+)?)\s*(?:hours?|hrs?)\s*ago/))off=m[1]*60;else if(m=s.match(/(\d+)\s*(?:minutes?|mins?)\s*ago/))off=+m[1];else if(/half an hour ago/.test(s))off=30;else if(/an hour ago/.test(s))off=60;
+ s=s.replace(/(half an |an )?(\d+(?:\.\d+)?\s*)?(hours?|hrs?|minutes?|mins?)\s*ago|just now/g,' ');const t=Date.now()-off*6e4;
+ if(/\b(sleep|slept|nap|napped)\b/.test(s)){if(!dm)return null;const d=dm[1]*(/^h/.test(dm[2])?60:1);return{id:id(),cat:'sleep',t:t-d*6e4,end:t}}
+ if(/diaper|nappy|poo|pee|wet|dirty|soiled|stool/.test(s)){const w=/wet|pee/.test(s),d=/poo|dirty|soiled|stool/.test(s);return{id:id(),cat:'diaper',t,kind:w&&d?'both':d?'dirty':'wet'}}
+ const sd=c=>/\bboth\b/.test(c)?['L','R']:[/\bleft\b/.test(c)&&'L',/\bright\b/.test(c)&&'R'].filter(Boolean),mls=c=>[...c.matchAll(/(\d+)\s*ml/g)].map(x=>+x[1]);
+ if(/pump/.test(s))return{id:id(),cat:'pump',t,sides:sd(s),ml:mls(s).reduce((a,b)=>a+b,0)};
+ const cl=s.split(/(?:and\s+)?(?:then\s+)?(?:topped|topping|top)\s*(?:it\s*)?up(?:\s+(?:with|using))?|\band then\b|\bthen\b/);let sides=[],bottle=null,bml=0;
+ cl.forEach((c,i)=>{const cs=sd(c),isB=/formula|express|ebm|bottle|paladai|palad|nifty|\bcup\b|own milk|my milk/.test(c)||(i>0&&!cs.length&&/ml/.test(c));
+  if(isB){const ml=mls(c)[0];bottle={ml:ml||+u.f.ml,milk:/formula/.test(c)?'formula':/express|ebm|own|my (breast )?milk/.test(c)?'ebm':'formula',via:/palad/.test(c)?'paladai':/nifty|cup/.test(c)?'cup':'bottle'}}
+  else if(cs.length||/breast|nurs|latch/.test(c)){cs.forEach(x=>{if(!sides.includes(x))sides.push(x)});bml+=mls(c)[0]||0}});
+ if(!sides.length&&!bottle)return null;const e={id:id(),cat:'feed',t,sides,bottle};if(bml)e.bml=bml;return e}
+function vOpen(){$('vs').classList.remove('hide');$('vt').value='';vMic()}
+function vClose(){try{rec&&rec.stop()}catch(e){}$('vs').classList.add('hide')}
+function vMic(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition,no=()=>{$('vst').textContent='Voice isn’t available here — type it instead ✍️'};if(!SR)return no();
+ try{rec=new SR();rec.lang=navigator.language||'en-US';rec.interimResults=true;rec.onstart=()=>{$('vst').textContent='Listening… 🎤'};
+ rec.onresult=ev=>{let t='',fin=false;for(const r of ev.results){t+=r[0].transcript;if(r.isFinal)fin=true}$('vt').value=t;if(fin)setTimeout(vGo,400)};rec.onerror=no;rec.start()}catch(e){no()}}
+function vGo(){const t=$('vt').value.trim();if(!t)return;try{rec&&rec.stop()}catch(e){}const e=parse(t);if(!e){$('vst').textContent='Couldn’t catch that — edit the text or try again';return}$('vt').value='';vClose();add(e)}
+/* ---- partner sync: Firebase Realtime Database REST, offline-first ---- */
+const DB=((window.CFG&&CFG.dbUrl)||'').replace(/\/$/,'');
+let syncing=false,syncT,sMsg=st.fam?'Waiting to sync…':'';
+const touch=()=>{st.cu=Date.now();persist();syncSoon()};
+const paintSync=()=>{const el=$('sy');if(el)el.textContent=sMsg;head()};
+function syncSoon(){clearTimeout(syncT);syncT=setTimeout(sync,1500)}
+async function sync(){
+ if(!DB||!st.fam||syncing)return;
+ if(!navigator.onLine){sMsg='Offline — saved on this phone, will sync later';return paintSync()}
+ syncing=true;let changed=false;
+ try{const base=`${DB}/fam/${st.fam}`,now=Date.now(),out={};
+  st.log.forEach(e=>{if(e.u>st.sy.pushed)out[e.id]=Object.assign({},e,{s:{'.sv':'timestamp'}})});
+  if(Object.keys(out).length){const r=await fetch(`${base}/log.json`,{method:'PATCH',body:JSON.stringify(out)});if(!r.ok)throw 0}
+  st.sy.pushed=now-1;
+  const r2=await fetch(`${base}/log.json?orderBy=${encodeURIComponent('"s"')}&startAt=${st.sy.pulled}`);if(!r2.ok)throw 0;
+  const rem=(await r2.json())||{},byId=new Map(st.log.map(e=>[e.id,e]));let mx=st.sy.pulled;
+  Object.values(rem).forEach(e=>{if(!e||!e.id)return;mx=Math.max(mx,e.s||0);const l=byId.get(e.id);norm(e);if(!l){st.log.push(e);changed=true}else if((e.u||0)>(l.u||0)){Object.assign(l,e);changed=true}});
+  st.sy.pulled=mx;st.log.sort((a,b)=>b.t-a.t);
+  const c=await (await fetch(`${base}/cfg.json`)).json();
+  if(c&&(c.u||0)>st.cu){st.baby=Object.assign({name:'',dob:'',kg:''},c.baby);st.fi=c.fi||st.fi;st.pi=c.pi||st.pi;st.lead=c.lead||st.lead;st.ss=c.ss||null;st.cu=c.u;changed=true}
+  else if(st.cu>((c&&c.u)||0))await fetch(`${base}/cfg.json`,{method:'PUT',body:JSON.stringify({baby:st.baby,fi:st.fi,pi:st.pi,lead:st.lead,ss:st.ss||0,u:st.cu})});
+  persist();sMsg='Synced '+fmt(Date.now())}
+ catch(e){sMsg='Can’t reach sync right now — will retry'}
+ syncing=false;paintSync();
+ if(changed&&!/INPUT|TEXTAREA/.test((document.activeElement||{}).tagName||''))render()}
+function newFam(){const a=new Uint8Array(16);crypto.getRandomValues(a);st.fam=[...a].map(x=>'abcdefghjkmnpqrstuvwxyz23456789'[x%31]).join('');st.cu=Date.now();st.sy={pushed:0,pulled:0};persist();sMsg='Waiting to sync…';render();sync()}
+function joinFam(c){c=(c||'').trim().toLowerCase().replace(/[^a-z0-9]/g,'');if(c.length<12)return;st.fam=c;st.cu=0;st.sy={pushed:0,pulled:0};persist();sMsg='Joining…';render();sync()}
+function leaveFam(){if(!confirm('Stop syncing on this phone? Your entries stay here.'))return;st.fam='';st.sy={pushed:0,pulled:0};persist();render()}
+async function shareFam(){const url=location.origin+location.pathname+'?join='+st.fam;try{if(navigator.share)await navigator.share({title:'Join our baby log',url});else{await navigator.clipboard.writeText(url);toast('invite link copied')}}catch(e){}}
+try{const j=new URLSearchParams(location.search).get('join');if(j&&DB){const c=j.toLowerCase().replace(/[^a-z0-9]/g,'');if(c.length>=12&&c!==st.fam){st.fam=c;st.cu=0;st.sy={pushed:0,pulled:0};persist()}history.replaceState(null,'',location.pathname)}}catch(e){}
+addEventListener('online',()=>{head();sync()});addEventListener('offline',head);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync()});
+setInterval(()=>{if(!document.hidden)sync()},15000);
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+render();setInterval(tick,1000);sync();
+</script></body></html>
