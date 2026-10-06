@@ -38,16 +38,16 @@ input[type=time],.tx{font:inherit;padding:10px;border-radius:12px;border:1.5px s
 .tx{flex:1 1 120px;margin:0}
 .hist{display:flex;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.hist:last-child{border:0}
 .hist .t{width:72px;color:var(--mute);font-size:14px}.hist .d{flex:1;font-size:14px}
-.hist button{background:none;border:0;color:var(--mute);font-size:17px;padding:4px 8px;cursor:pointer}
+.hist button{background:none;border:0;color:var(--mute);font-size:21px;padding:6px 11px;cursor:pointer}
 .sum{display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px}
 .empty{color:var(--mute);text-align:center;padding:10px;font-size:14px}
 .big3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.big3 .chip{padding:22px 4px;font-size:15px}.big3 .chip span{display:block;font-size:28px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .tile{background:var(--soft);border-radius:16px;padding:10px;text-align:center}.tile b{display:block;font-size:22px}.tile small{font-size:11px;color:var(--mute)}
-.bars{display:flex;gap:6px;align-items:flex-end;height:120px;overflow-x:auto}.bars div{flex:1;min-width:22px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:3px}
+.bars{display:flex;gap:6px;align-items:flex-end;height:140px;overflow-x:auto}.bars div{flex:1;min-width:34px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:3px}
 .bars i{display:block;width:100%;background:var(--acc);border-radius:6px 6px 2px 2px;min-height:2px}.bars small{font-size:11px;color:var(--mute)}
 nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
-nav button{background:none;border:0;color:var(--mute);font:inherit;font-size:11px;padding:4px 8px;cursor:pointer;border-radius:12px}
+nav button{background:none;border:0;color:var(--mute);font:inherit;font-size:10px;padding:4px 2px;cursor:pointer;border-radius:12px}
 nav button span{display:block;font-size:22px}nav button.on{color:var(--accd);font-weight:700;background:var(--soft)}
 .fab{position:fixed;right:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;border:0;background:var(--acc);color:#fff;font-size:24px;box-shadow:0 4px 14px rgba(0,0,0,.2);cursor:pointer}
 .sheet{position:fixed;left:12px;right:12px;bottom:calc(80px + env(safe-area-inset-bottom,0px));max-width:436px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:0 6px 24px rgba(0,0,0,.18)}
@@ -59,6 +59,13 @@ nav button span{display:block;font-size:22px}nav button.on{color:var(--accd);fon
 .link{background:none;border:0;color:var(--accd);font:inherit;font-size:14px;text-decoration:underline;margin-top:10px;cursor:pointer}
 .note{font-size:12px;color:var(--mute);text-align:center}
 .hide{display:none}
+.alert{display:block;width:100%;text-align:left;background:var(--warm);border-color:var(--warn);color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
+.card.low{background:var(--warm);border-color:var(--warn)}
+.hist button.chk{width:28px;height:28px;border-radius:50%;border:2px solid var(--acc);padding:0;margin-right:10px;flex:0 0 auto;font-size:16px;color:#fff}.hist button.chk.on{background:var(--acc)}
+.fab.live{background:var(--warn);animation:pz 1.6s ease-in-out infinite}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.cal .wd{text-align:center;font-size:11px;color:var(--mute)}
+.day{aspect-ratio:1/1.1;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;padding:3px 1px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;overflow:hidden}
+.day b{font-size:13px}.day small{font-size:10px;line-height:1.1;color:var(--mute)}.day.on{border-color:var(--acc);box-shadow:0 0 0 2px var(--soft)}.day.today b{color:var(--accd);text-decoration:underline}
 .gear{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--line);background:var(--card);font-size:24px;cursor:pointer;color:var(--ink)}
 .ringw{position:relative;width:220px;height:220px;margin:6px auto 2px}.ringw svg{width:100%;height:100%;filter:drop-shadow(0 4px 10px rgba(127,168,143,.25))}
 .ringc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 30px}
@@ -73,10 +80,10 @@ nav button span{display:block;font-size:22px}nav button.on{color:var(--accd);fon
 @keyframes fade{from{opacity:0}}
 </style></head>
 <body><div class="wrap"><header id="hd"></header><div id="main"></div></div>
-<button class="fab" onclick="vOpen()" aria-label="Voice entry">🎤</button>
+<button class="fab" id="fab" onclick="vOpen()" aria-label="Voice entry">🎤</button>
 <div class="sheet hide" id="vs"><div class="lbl" id="vst"></div>
 <textarea id="vt" rows="3" placeholder="Say or type: “Fed from right breast, topped up with 30 ml formula via paladai 20 minutes ago”"></textarea>
-<div class="row"><button class="chip sm" onclick="vMic()">🎤 Speak</button><button class="chip sm on" onclick="vGo()">Log it</button><button class="chip sm" onclick="vClose()">Close</button></div></div>
+<div class="row"><button class="chip sm" onclick="vMic()">🎤 Speak</button><button class="chip sm on" onclick="vGo()">Log it</button><button class="chip sm" onclick="vClose()">Close</button><button class="chip sm" id="hfb" onclick="hfToggle()">🎧 Hands-free: off</button></div><div class="note" style="margin-top:6px">Try: “start timer left”, “stop”, “save”, “add diapers to shopping list”, “bought 2 tins of formula”. In hands-free mode, start entries with “log”, “add”, “bought” or “used”.</div></div>
 <div class="toast" id="toast"><span id="tmsg"></span><button onclick="undo()">Undo</button></div>
 <nav id="tabs"></nav>
 <script>
@@ -90,7 +97,7 @@ const live=()=>st.log.filter(e=>!e.del);
 function norm(e){if(e.cat==='feed'||e.cat==='pump')e.sides=Array.isArray(e.sides)?e.sides:Object.values(e.sides||{});return e}
 st.log.forEach(e=>{if(!e.u)e.u=e.t||1;norm(e)});
 let u={tab:'feed',r:'7',set:false,f:{s:[],b:false,ml:90,milk:'formula',via:'bottle'},p:{s:[],ml:60},w:{off:0,c:false,time:''},sw:{run:false,start:0,acc:0}},lastId=null,tt,rec;
-const TABS=[['feed','🤱','Feed'],['pump','💧','Pump'],['diaper','🧷','Diaper'],['sleep','🌙','Sleep'],['ins','📊','Insights']];
+const TABS=[['feed','🤱','Feed'],['pump','💧','Pump'],['diaper','🧷','Diaper'],['sleep','🌙','Sleep'],['growth','📏','Growth'],['shop','🛒','Shop'],['ins','📊','Insights']];
 const id=()=>'e'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
 const fmt=t=>new Date(t).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
 const dur=ms=>{const m=Math.round(Math.abs(ms)/6e4),h=Math.floor(m/60);return h?`${h}h ${m%60}m`:`${m}m`};
@@ -103,52 +110,60 @@ function desc(e){
  if(e.cat==='feed'){const p=[];if(e.sides.length)p.push('🤱 '+sideL(e.sides)+(e.secs?' · '+mmss(e.secs*1000):'')+(e.bml?' · ~'+e.bml+' mL':''));if(e.bottle)p.push('🍼 '+(e.bottle.ml?e.bottle.ml+' mL ':'')+(e.bottle.milk==='ebm'?'expressed milk':'formula'));return p.join('<br>')}
  if(e.cat==='pump')return '💧 '+(e.sides.length?sideL(e.sides):'Pumped')+(e.ml?' · '+e.ml+' mL':'')+(e.secs?' · '+mmss(e.secs*1000):'');
  if(e.cat==='diaper')return {wet:'💧 Wet',dirty:'💩 Dirty',both:'💧💩 Wet + dirty'}[e.kind];
- return '🌙 Slept '+dur(e.end-e.t)}
+ if(e.cat==='todo')return (e.done?'✅ ':'⬜ ')+E(e.text);
+ if(e.cat==='item')return '📦 '+E(e.name);
+ if(e.cat==='buy'){const i=itm(e.item)||{};return '🛍️ Bought '+e.packs+' '+(i.pn||'pack')+(e.packs>1?'s':'')+' · '+E(i.name||'item')+(e.price?' · '+e.price:'')}
+ if(e.cat==='use'){const i=itm(e.item)||{};return '➖ Used '+e.qty+' '+(i.unit||'')+' · '+E(i.name||'item')}
+ if(e.cat==='growth')return '📏 '+[e.kg&&e.kg+' kg',e.cm&&e.cm+' cm'].filter(Boolean).join(' · ');return '🌙 Slept '+dur(e.end-e.t)}
 function hist(c){const s=new Date();s.setHours(0,0,0,0);const l=live().filter(e=>e.cat===c&&e.t>=s.getTime());return `<div class="card"><div class="sum"><span>Today</span><span>${l.length}</span></div>${l.length?l.map(e=>`<div class="hist"><span class="t">${fmt(e.t)}</span><span class="d">${desc(e)}${e.by&&st.fam?`<br><small style="color:var(--mute)">by ${E(e.by)}</small>`:''}</span><button onclick="editE('${e.id}')" aria-label="Edit">✎</button><button onclick="askDel('${e.id}')" aria-label="Delete">✕</button></div>`).join(''):'<div class="empty">Nothing yet today 🌱</div>'}</div>`}
 const cd=()=>`<div class="card status" id="cd"><div class="lbl" id="sl"></div><div class="ringw"><svg viewBox="0 0 200 200"><defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7fa88f"/><stop offset="1" stop-color="#f0b48f"/></linearGradient></defs><circle cx="100" cy="100" r="88" fill="none" stroke="var(--line)" stroke-width="12"/><circle id="rp" cx="100" cy="100" r="88" fill="none" stroke="url(#gr)" stroke-width="12" stroke-linecap="round" stroke-dasharray="553" stroke-dashoffset="553" transform="rotate(-90 100 100)"/><g id="dot" transform="rotate(0 100 100)"><circle cx="100" cy="12" r="8" fill="var(--card)" stroke="var(--acc)" stroke-width="4"/></g></svg><div class="ringc"><div class="big" id="sb"></div><div class="lbl" id="sx" style="margin:4px 0 0"></div></div></div></div>`;
 const endOf=e=>e.t+(e.secs||0)*1000;
 const hms=ms=>{const x=Math.floor(Math.abs(ms)/1000),p=n=>String(n).padStart(2,'0');return Math.floor(x/3600)+':'+p(Math.floor(x%3600/60))+':'+p(x%60)};
 const swNow=()=>u.sw.acc+(u.sw.run?Date.now()-u.sw.start:0);
-function swTog(){if(u.sw.run){u.sw.acc+=Date.now()-u.sw.start;u.sw.run=false}else{u.sw.start=Date.now();u.sw.run=true}render()}
-function swReset(){u.sw={run:false,start:0,acc:0};render()}
-const takeSw=()=>{const s=Math.round(swNow()/1000);u.sw={run:false,start:0,acc:0};return s};
+const swSave=()=>{st.swp=(u.sw.run||u.sw.acc)&&u.sw.cat?{...u.sw}:null;persist()};
+function swTog(){if(u.sw.run){u.sw.acc+=Date.now()-u.sw.start;u.sw.run=false}else{u.sw.start=Date.now();u.sw.run=true;u.sw.cat=u.tab;if(st.nton)ntDel(u.tab)}swSave();render()}
+function swReset(){const c=u.sw.cat;u.sw={run:false,start:0,acc:0};swSave();render();if(c)pushSched(c)}
+const takeSw=()=>{const s=Math.round(swNow()/1000);u.sw={run:false,start:0,acc:0};st.swp=null;persist();return s};
 const swH=()=>`<div class="sw"><span class="fl">⏱</span><b id="sw">${mmss(swNow())}</b>${ch(u.sw.run?'Pause':u.sw.acc?'Resume':'Start',0,'swTog()','sm')}${u.sw.acc||u.sw.run?ch('Reset',0,'swReset()','sm'):''}</div>`;
-const whenH=tm=>`<div class="sec"><div class="lbl">${tm&&(u.sw.acc||u.sw.run)?'When did it end?':'When?'}</div><div class="row">${[[0,'Just now'],[5,'5 min ago'],[10,'10 min ago'],[20,'20 min ago']].map(([v,l])=>ch(l,!u.w.c&&u.w.off===v,`setW(${v})`,'sm')).join('')}${ch('Other…',u.w.c,'setW(-1)','sm')}</div>${u.w.c?`<input type="time" value="${u.w.time}" oninput="u.w.time=this.value">`:''}</div>`;
+const whenH=(tm,d)=>`<div class="sec"><div class="lbl">${tm&&(u.sw.acc||u.sw.run||d)?'When did it end?':'When?'}</div><div class="row">${[[0,'Just now'],[5,'5 min ago'],[10,'10 min ago'],[20,'20 min ago']].map(([v,l])=>ch(l,!u.w.c&&u.w.off===v,`setW(${v})`,'sm')).join('')}${ch('Other…',u.w.c,'setW(-1)','sm')}</div>${u.w.c?`<input type="time" value="${u.w.time}" oninput="u.w.time=this.value">`:''}</div>`;
 function setW(v){if(v<0){u.w.c=true;if(!u.w.time)u.w.time=new Date().toTimeString().slice(0,5)}else{u.w.c=false;u.w.off=v}render()}
 function getT(){if(u.w.c&&u.w.time){const [h,m]=u.w.time.split(':'),d=new Date(u.w.base||Date.now());d.setHours(+h,+m,0,0);if(!u.w.base&&d>new Date())d.setDate(d.getDate()-1);return d.getTime()}return Date.now()-u.w.off*6e4}
 const resetW=()=>{u.w={off:0,c:false,time:''}};
 const mlH=k=>`<div class="stepper"><button onclick="stp('${k}',-5)">−</button><input type="number" inputmode="numeric" step="5" min="0" value="${u[k].ml}" oninput="u['${k}'].ml=+this.value"><span>mL</span><button onclick="stp('${k}',5)">+</button></div><div class="row">${[30,60,90,120,150].map(n=>ch(n,u[k].ml===n,`u.${k}.ml=${n};render()`,'sm')).join('')}</div>`;
 const stp=(k,d)=>{u[k].ml=Math.max(0,(+u[k].ml||0)+d);render()};
 function tg(k,x){const a=u[k].s,i=a.indexOf(x);i<0?a.push(x):a.splice(i,1);render()}
+const durH=k=>{if(u.sw.run||u.sw.acc)return'';const d=u[k].dur||0;return `<div class="sec"><div class="lbl">${k==='f'?'Feed':'Pump'} duration <small>(for a past session, or use the timer above)</small></div><div class="stepper"><button onclick="dst('${k}',-60)">−</button><b style="min-width:110px;text-align:center;font-size:26px">${d?Math.round(d/60)+' min':'—'}</b><button onclick="dst('${k}',60)">+</button></div><div class="row">${[5,10,15,20,30].map(n=>ch(n+' min',d===n*60,`u.${k}.dur=${n*60};render()`,'sm')).join('')}</div></div>`};
+const dst=(k,x)=>{u[k].dur=Math.max(0,(u[k].dur||0)+x);render()};
 function pFeed(){const f=u.f,lb=live().find(e=>e.cat==='feed'&&e.sides.length===1),ok=f.s.length||f.b;
  return cd()+`<div class="card">${u.edit?`<div class="hint" style="margin:0 0 10px">✎ Editing a saved feed <button class="link" style="margin:0 0 0 8px" onclick="cancelEdit()">Cancel</button></div>`:''}<div class="lbl">What was fed? <small>(pick all that apply)</small></div><div class="row">${ch('🤱 Left',f.s.includes('L'),"tg('f','L')")}${ch('🤱 Right',f.s.includes('R'),"tg('f','R')")}${ch('🍼 Bottle / cup',f.b,"u.f.b=!u.f.b;render()")}</div>${lb&&!f.s.length?`<div class="hint">Last breast was ${lb.sides[0]==='L'?'left':'right'} — start with ${lb.sides[0]==='L'?'right':'left'} this time</div>`:''}
- ${f.s.length?`<div class="sec"><div class="lbl">Breast feed timer</div>${swH()}</div>`:''}
+ ${f.s.length||(u.sw.cat==='feed'&&(u.sw.acc||u.sw.run))?`<div class="sec"><div class="lbl">Breast feed timer</div>${swH()}</div>${durH('f')}`:''}
  ${f.b?`<div class="sec"><div class="lbl">What was in it?</div><div class="row">${ch('Formula',f.milk==='formula',"u.f.milk='formula';render()",'sm')}${ch('Expressed milk',f.milk==='ebm',"u.f.milk='ebm';render()",'sm')}</div></div><div class="sec">${mlH('f')}</div>`:''}
- ${whenH(1)}<button class="save" ${ok?'':'disabled'} onclick="saveFeed()">${u.edit?'Update feed':'Save feed'}</button></div>`+hist('feed')}
-function saveFeed(){const f=u.f,secs=f.s.length?takeSw():0,t=getT()-secs*1000;
+ ${whenH(1,u.f.s.length&&u.f.dur)}<button class="save" ${ok?'':'disabled'} onclick="saveFeed()">${u.edit?'Update feed':'Save feed'}</button></div>`+hist('feed')}
+function saveFeed(){const f=u.f,secs=((f.s.length||u.sw.cat==='feed')?takeSw():0)||(f.s.length?f.dur||0:0),t=getT()-secs*1000;
  if(u.edit){const e=st.log.find(x=>x.id===u.edit&&x.cat==='feed');if(e){e.t=t;e.sides=[...f.s];if(secs)e.secs=secs;else delete e.secs;if(f.b)e.bottle={ml:+f.ml||0,milk:f.milk,via:f.via};else delete e.bottle;e.u=Date.now();finishEdit('feed');return}}
- const e={id:id(),t,cat:'feed',sides:[...f.s]};if(secs)e.secs=secs;if(f.b)e.bottle={ml:+f.ml||0,milk:f.milk,via:f.via};u.f.s=[];u.f.b=false;resetW();add(e)}
+ const e={id:id(),t,cat:'feed',sides:[...f.s]};if(secs)e.secs=secs;if(f.b)e.bottle={ml:+f.ml||0,milk:f.milk,via:f.via};u.f.s=[];u.f.b=false;u.f.dur=0;resetW();add(e)}
 function goTab(k){if(u.edit&&u.tab!==k)clearEdit();u.tab=k;render()}
-function clearEdit(){u.edit=null;u.sl=null;u.f.s=[];u.f.b=false;u.p.s=[];u.sw={run:false,start:0,acc:0};resetW()}
+function clearEdit(){u.edit=null;u.sl=null;u.g=null;u.f.s=[];u.f.b=false;u.f.dur=0;u.p.dur=0;u.p.s=[];u.sw={run:false,start:0,acc:0};resetW()}
 function cancelEdit(){clearEdit();render()}
-function finishEdit(cat){st.log.sort((a,b)=>b.t-a.t);delete st.nt[cat];persist();syncSoon();clearEdit();sfx('save');toast(cat+' updated');render()}
-function editE(i){const e=st.log.find(x=>x.id===i);if(!e)return;clearEdit();u.edit=i;u.set=false;u.tab=e.cat;const en=new Date(e.t+(e.secs||0)*1000),hm=d=>d.toTimeString().slice(0,5);
- u.w={off:0,c:true,time:hm(en),base:en.getTime()};u.sw={run:false,start:0,acc:(e.secs||0)*1000};
- if(e.cat==='feed'){const b=e.bottle;u.f={s:[...e.sides],b:!!b,ml:b?b.ml:u.f.ml,milk:b?b.milk:'formula',via:b?b.via:'bottle'}}
- else if(e.cat==='pump')u.p={s:[...e.sides],ml:e.ml||0};
+function finishEdit(cat){st.log.sort((a,b)=>b.t-a.t);delete st.nt[cat];persist();syncSoon();clearEdit();sfx('save');checkStock();toast(cat+' updated');if(cat==='growth')growthSync();render();pushSched(cat)}
+function editE(i){const e=st.log.find(x=>x.id===i);if(!e)return;if(SH[e.cat])return shopEdit(e);clearEdit();u.edit=i;u.set=false;u.tab=e.cat;const en=new Date(e.t+(e.secs||0)*1000),hm=d=>d.toTimeString().slice(0,5);
+ u.w={off:0,c:true,time:hm(en),base:en.getTime()};u.sw={run:false,start:0,acc:0};
+ if(e.cat==='feed'){const b=e.bottle;u.f={s:[...e.sides],b:!!b,ml:b?b.ml:u.f.ml,milk:b?b.milk:'formula',via:b?b.via:'bottle',dur:e.secs||0}}
+ else if(e.cat==='pump')u.p={s:[...e.sides],ml:e.ml||0,dur:e.secs||0};
+ else if(e.cat==='growth')u.g={kg:e.kg||null,cm:e.cm||null,date:ymd(e.t)};
  else if(e.cat==='sleep')u.sl={a:hm(new Date(e.t)),b:hm(new Date(e.end)),base:e.t};
  scrollTo(0,0);render()}
 function sleepEd(){return `<div class="card"><div class="hint" style="margin:0 0 10px">✎ Editing a sleep entry <button class="link" style="margin:0 0 0 8px" onclick="cancelEdit()">Cancel</button></div><div class="lbl">Fell asleep at</div><input type="time" class="tx" style="width:100%" value="${u.sl.a}" oninput="u.sl.a=this.value"><div class="lbl" style="margin-top:12px">Woke up at</div><input type="time" class="tx" style="width:100%" value="${u.sl.b}" oninput="u.sl.b=this.value"><button class="save" onclick="saveSleep()">Update sleep</button></div>`}
 function saveSleep(){const e=st.log.find(x=>x.id===u.edit&&x.cat==='sleep');if(!e||!u.sl.a||!u.sl.b)return;const [h1,m1]=u.sl.a.split(':'),[h2,m2]=u.sl.b.split(':'),s0=new Date(u.sl.base),e0=new Date(u.sl.base);s0.setHours(+h1,+m1,0,0);e0.setHours(+h2,+m2,0,0);if(e0<=s0)e0.setDate(e0.getDate()+1);e.t=s0.getTime();e.end=e0.getTime();e.u=Date.now();finishEdit('sleep')}
-function pPump(){const p=u.p;return cd()+`<div class="card">${u.edit?`<div class="hint" style="margin:0 0 10px">✎ Editing a pumping entry <button class="link" style="margin:0 0 0 8px" onclick="cancelEdit()">Cancel</button></div>`:''}<div class="lbl">Which side?</div><div class="row">${ch('💧 Left',p.s.includes('L'),"tg('p','L')")}${ch('💧 Right',p.s.includes('R'),"tg('p','R')")}</div><div class="sec"><div class="lbl">Pump timer</div>${swH()}</div><div class="sec"><div class="lbl">How much?</div>${mlH('p')}</div>${whenH(1)}<button class="save" onclick="savePump()">${u.edit?'Update pumping':'Save pumping'}</button></div>`+hist('pump')}
-function savePump(){const p=u.p,secs=takeSw(),t=getT()-secs*1000;
+function pPump(){const p=u.p;return cd()+`<div class="card">${u.edit?`<div class="hint" style="margin:0 0 10px">✎ Editing a pumping entry <button class="link" style="margin:0 0 0 8px" onclick="cancelEdit()">Cancel</button></div>`:''}<div class="lbl">Which side?</div><div class="row">${ch('💧 Left',p.s.includes('L'),"tg('p','L')")}${ch('💧 Right',p.s.includes('R'),"tg('p','R')")}</div><div class="sec"><div class="lbl">Pump timer</div>${swH()}</div>${durH('p')}<div class="sec"><div class="lbl">How much?</div>${mlH('p')}</div>${whenH(1,u.p.dur)}<button class="save" onclick="savePump()">${u.edit?'Update pumping':'Save pumping'}</button></div>`+hist('pump')}
+function savePump(){const p=u.p,secs=takeSw()||p.dur||0,t=getT()-secs*1000;
  if(u.edit){const e=st.log.find(x=>x.id===u.edit&&x.cat==='pump');if(e){e.t=t;e.sides=[...p.s];e.ml=+p.ml||0;if(secs)e.secs=secs;else delete e.secs;e.u=Date.now();finishEdit('pump');return}}
- const e={id:id(),t,cat:'pump',sides:[...p.s],ml:+p.ml||0};if(secs)e.secs=secs;p.s=[];resetW();add(e)}
+ const e={id:id(),t,cat:'pump',sides:[...p.s],ml:+p.ml||0};if(secs)e.secs=secs;p.s=[];p.dur=0;resetW();add(e)}
 function pDia(){return `<div class="card">${u.edit?'<div class="hint" style="margin:0 0 10px">✎ Editing a diaper entry: pick the type (and time) below <button class="link" style="margin:0 0 0 8px" onclick="cancelEdit()">Cancel</button></div>':'<div class="lbl">Tap to log</div>'}<div class="big3">${[['wet','💧','Wet'],['dirty','💩','Dirty'],['both','💧💩','Both']].map(([k,i,l])=>`<button class="chip" onclick="dia('${k}')"><span>${i}</span>${l}</button>`).join('')}</div>${whenH()}</div>`+hist('diaper')}
 function dia(k){if(u.edit){const e=st.log.find(x=>x.id===u.edit&&x.cat==='diaper');if(e){e.kind=k;e.t=getT();e.u=Date.now();finishEdit('diaper');return}}const e={id:id(),t:getT(),cat:'diaper',kind:k};resetW();add(e)}
 function pSleep(){if(u.edit&&u.sl)return sleepEd()+hist('sleep');return (st.ss?`<div class="card status"><div class="lbl">Sleeping 😴</div><div class="big" id="sd">${dur(Date.now()-st.ss)}</div><button class="save" onclick="wake()">☀️ Baby woke up</button></div>`:`<div class="card"><button class="save" style="margin:0" onclick="st.ss=Date.now();touch();render()">🌙 Baby fell asleep</button></div>`)+hist('sleep')}
 function wake(){const e={id:id(),t:st.ss,cat:'sleep',end:Date.now()};st.ss=null;st.cu=Date.now();add(e)}
-function pSet(){const b=st.baby,ivs=(k,a)=>a.map(([v,l])=>ch(l,st[k]===v,`st.${k}=${v};st.nt={};touch();render()`,'sm')).join('');
+function pSet(){const b=st.baby,ivs=(k,a)=>a.map(([v,l])=>ch(l,st[k]===v,`st.${k}=${v};st.nt={};touch();render();pushAll()`,'sm')).join('');
  return `<div class="card"><div class="lbl">Baby’s name</div><input class="tx" style="width:100%" placeholder="Name" value="${E(b.name)}" oninput="st.baby.name=this.value;touch();head()">
  <div class="lbl" style="margin-top:12px">Date of birth</div><input class="tx" style="width:100%" type="date" value="${E(b.dob)}" onchange="st.baby.dob=this.value;touch();render()">
  <div class="lbl" style="margin-top:12px">Weight (kg)</div><input class="tx" style="width:100%" type="number" step="0.05" min="0" placeholder="e.g. 3.9" value="${E(b.kg)}" oninput="st.baby.kg=this.value;touch();head()">
@@ -156,60 +171,82 @@ function pSet(){const b=st.baby,ivs=(k,a)=>a.map(([v,l])=>ch(l,st[k]===v,`st.${k
  <div class="sec"><div class="lbl">Time between pumping</div><div class="row">${ivs('pi',[[120,'2h'],[180,'3h'],[240,'4h']])}</div></div>
  <div class="sec"><div class="lbl">Remind me before</div><div class="row">${ivs('lead',[[10,'10 min'],[15,'15 min'],[30,'30 min']])}</div></div>
  <div class="sec"><div class="lbl">Partner sync</div>${!DB?'<div class="note">Sync isn’t set up in this copy yet (see README).</div>':st.fam?`<div class="note" id="sy">${E(sMsg)}</div><div class="row" style="margin-top:8px"><button class="chip sm on" onclick="shareFam()">Share invite link</button><button class="chip sm" onclick="leaveFam()">Stop syncing</button></div><div class="note" style="margin-top:6px">Family code: <b>${E(st.fam)}</b></div>`:`<button class="chip sm on" style="width:100%" onclick="newFam()">Create a family</button><div class="row" style="margin-top:8px"><input class="tx" id="jc" placeholder="Or enter family code"><button class="chip sm" onclick="joinFam($('jc').value)">Join</button></div>`}<div class="lbl" style="margin-top:12px">Your name (shown on entries you log)</div><div class="row"><input class="tx" placeholder="e.g. Mum" value="${E(st.me)}" oninput="st.me=this.value;persist()"></div></div>
+ <div class="sec"><div class="lbl">Phone push reminders (even when the app is closed)</div>${st.nton?`<div class="note" style="text-align:left">1. Install the free <b>ntfy</b> app (App Store / Play Store).<br>2. In ntfy tap <b>+</b> and subscribe to this topic:<br><b>${E(ntTopic())}</b><br>3. Tap Send test. Your partner subscribes to the same topic.</div><div class="row" style="margin-top:8px">${ch('Send test',0,'ntTest()','sm')}${ch('Copy topic',0,'ntCopy()','sm')}${ch('Turn off',0,'ntToggle()','sm')}</div>`:`<button class="chip sm on" style="width:100%" onclick="ntToggle()">Turn on push reminders</button>`}</div>
  <div class="sec"><div class="lbl">Background colour</div><div class="row" style="gap:10px">${BGS.map(([h,l])=>`<button class="cs ${st.bg===h?'on':''}" style="background:${h}" onclick="setBg('${h}')" aria-label="${l}"></button>`).join('')}<label class="cs cust" aria-label="Custom colour">🎨<input type="color" value="${st.bg||'#faf6f0'}" oninput="setBg(this.value,1)"></label></div><button class="link" onclick="setBg(null)">Match my phone (auto)</button></div>
  <div class="sec"><div class="lbl">Sounds, vibration &amp; verse</div><div class="row">${ch('🔔 Sounds '+(st.snd===false?'off':'on'),st.snd!==false,"st.snd=st.snd===false;persist();render()",'sm')}${ch('📳 Haptics '+(st.hap===false?'off':'on'),st.hap!==false,"st.hap=st.hap===false;persist();render()",'sm')}${ch('📖 Verse '+(st.vv===false?'off':'on'),st.vv!==false,"st.vv=st.vv===false;persist();render()",'sm')}</div></div>
  <button class="link" onclick="notifOn(this)">Turn on notifications</button></div>`}
 async function notifOn(b){try{const p=await Notification.requestPermission();b.textContent=p==='granted'?'Notifications on ✓':'Notifications blocked'}catch(e){b.textContent='Notifications unavailable here'}}
 function tile(i,v,l){return `<div class="tile">${i}<b>${v}</b><small>${l}</small></div>`}
-function bars(t,v,bk,unit){const mx=Math.max(...v,1);return `<div class="card"><div class="lbl">${t} · ${unit>1?'avg per day, by '+(unit===7?'week':'month'):'per day'}</div><div class="bars">${v.map((x,i)=>`<div><small>${x?(x>=10?Math.round(x):+x.toFixed(1)):''}</small><i style="height:${x/mx*80}px"></i><small>${bk[i].l}</small></div>`).join('')}</div></div>`}
-function pIns(){const L=live(),DAY=864e5,s0=new Date();s0.setHours(0,0,0,0);const T0=s0.getTime(),fd=new Date(L.length?Math.min(...L.map(e=>e.t)):T0);fd.setHours(0,0,0,0);
+function bars(t,v,bk,unit){const mx=Math.max(...v,1);return `<div class="card"><div class="lbl">${t} · ${unit>1?'avg per day, by '+(unit===7?'week':'month'):'per day'}</div><div class="bars">${v.map((x,i)=>`<div><small>${x?(x>=10?Math.round(x):+x.toFixed(1)):''}</small><i style="height:${x/mx*80}px"></i><small>${bk[i].l}</small>${bk[i].w?`<small>${bk[i].w}</small>`:''}</div>`).join('')}</div></div>`}
+function pTrends(){const L=live().filter(e=>TRK.includes(e.cat)),DAY=864e5,s0=new Date();s0.setHours(0,0,0,0);const T0=s0.getTime(),fd=new Date(L.length?Math.min(...L.map(e=>e.t)):T0);fd.setHours(0,0,0,0);
  const since=Math.floor((T0-fd.getTime())/DAY)+1,n=u.r==='all'?since:+u.r,days=Math.min(n,since),RS=u.r==='all'?fd.getTime():T0-(n-1)*DAY,unit=n<=31?1:n<=182?7:30,nb=Math.ceil(n/unit);
  const M={F:e=>e.cat==='feed'?1:0,M:e=>e.cat==='feed'?((e.bottle?e.bottle.ml:0)||0)+(e.bml||0):0,P:e=>e.cat==='pump'?e.ml||0:0,D:e=>e.cat==='diaper'?1:0,S:e=>e.cat==='sleep'?(e.end-e.t)/36e5:0};
  const sum=(f,a,b)=>L.reduce((x,e)=>e.t>=a&&e.t<b?x+f(e):x,0);
- const bk=[...Array(nb)].map((_,i)=>{const a=RS+i*unit*DAY;return{a,b:a+unit*DAY,c:Math.max(1,Math.min(unit,Math.round((T0+DAY-a)/DAY))),l:unit===1?(n<=14?'SMTWTFS'[new Date(a).getDay()]:new Date(a).getDate()):new Date(a).toLocaleDateString([],{day:'numeric',month:'short'})}});
+ const bk=[...Array(nb)].map((_,i)=>{const a=RS+i*unit*DAY;return{a,b:a+unit*DAY,c:Math.max(1,Math.min(unit,Math.round((T0+DAY-a)/DAY))),l:new Date(a).toLocaleDateString([],{day:'numeric',month:'short'}),w:unit===1?new Date(a).toLocaleDateString([],{weekday:'short'}):''}});
  const ser=f=>bk.map(k=>sum(f,k.a,k.b)/k.c),avg=f=>sum(f,RS,T0+DAY)/days,td=f=>sum(f,T0,T0+DAY),kg=+st.baby.kg,r1=x=>+x.toFixed(1);
  const rg=[['7','7 days'],['14','14 days'],['30','30 days'],['90','3 months'],['all','All time']];
  return `<div class="card"><div class="row">${rg.map(([v,l])=>ch(l,u.r===v,`u.r='${v}';render()`,'sm')).join('')}</div></div>
  <div class="card"><div class="lbl">Today</div><div class="grid">${tile('🍼',td(M.F),'feeds')}${tile('🥛',td(M.M),'mL fed'+(kg&&td(M.M)?` · ${Math.round(td(M.M)/kg)}/kg`:''))}${tile('💧',td(M.P),'mL pumped')}${tile('🧷',td(M.D),'diapers')}${tile('🌙',r1(td(M.S)),'h sleep')}</div></div>
  <div class="card"><div class="lbl">Daily average · ${rg.find(x=>x[0]===u.r)[1].toLowerCase()} (${days} day${days>1?'s':''} of data)</div><div class="grid">${tile('🍼',r1(avg(M.F)),'feeds')}${tile('🥛',Math.round(avg(M.M)),'mL fed'+(kg&&avg(M.M)?` · ${Math.round(avg(M.M)/kg)}/kg`:''))}${tile('💧',Math.round(avg(M.P)),'mL pumped')}${tile('🧷',r1(avg(M.D)),'diapers')}${tile('🌙',r1(avg(M.S)),'h sleep')}</div>${kg?'':'<div class="note" style="margin-top:8px">Add weight in ⚙︎ to see mL per kg</div>'}</div>`
  +bars('Feeds',ser(M.F),bk,unit)+bars('Milk fed (mL)',ser(M.M),bk,unit)+bars('Pumped (mL)',ser(M.P),bk,unit)+bars('Diapers',ser(M.D),bk,unit)+bars('Sleep (hours)',ser(M.S),bk,unit)+'<div class="note">Numbers are for your own tracking — your paediatrician knows what’s right for your baby 💛</div>'}
-function add(e){e.u=Date.now();if(st.me)e.by=st.me;st.log.push(e);st.log.sort((a,b)=>b.t-a.t);delete st.nt[e.cat];persist();lastId=e.id;burst();sfx('save');setTimeout(haptic,120);toast(desc(e).replace(/<br>/g,' + ').replace(/<[^>]+>/g,''));render();syncSoon()}
-function delE(i){const e=st.log.find(x=>x.id===i);if(e){e.del=1;e.u=Date.now();persist();syncSoon()}sfx('del');render()}
+function pIns(){return `<div class="card"><div class="row">${ch('📈 Trends',u.iv!=='cal',"u.iv='t';render()")}${ch('📅 Calendar',u.iv==='cal',"u.iv='cal';render()")}</div></div>`+(u.iv==='cal'?pCal():pTrends())}
+function mon(d){const n=new Date(),m=new Date(u.cm||new Date(n.getFullYear(),n.getMonth(),1));m.setMonth(m.getMonth()+d);if(d>0&&m>n)return;u.cm=new Date(m.getFullYear(),m.getMonth(),1).getTime();render()}
+function pCal(){const now=new Date(),m0=new Date(u.cm||new Date(now.getFullYear(),now.getMonth(),1)),Y=m0.getFullYear(),Mo=m0.getMonth(),dim=new Date(Y,Mo+1,0).getDate(),off=m0.getDay();
+ const key=t=>{const d=new Date(t);return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate()},E0=()=>({f:0,ml:0,p:0,d:0,s:0,l:[]}),G={};
+ live().filter(e=>TRK.includes(e.cat)).forEach(e=>{const k=key(e.t),o=G[k]=G[k]||E0();o.l.push(e);if(e.cat==='feed'){o.f++;o.ml+=((e.bottle?e.bottle.ml:0)||0)+(e.bml||0)}else if(e.cat==='pump')o.p+=e.ml||0;else if(e.cat==='diaper')o.d++;else if(e.cat==='sleep')o.s+=(e.end-e.t)/36e5});
+ const sel=u.cd?new Date(u.cd):now,sk=key(sel),so=G[sk]||E0();let cells='';for(let i=0;i<off;i++)cells+='<i></i>';
+ for(let n=1;n<=dim;n++){const k=Y+'-'+Mo+'-'+n,o=G[k];cells+=`<button class="day ${k===sk?'on':''} ${key(now)===k?'today':''}" style="${o&&o.f?`background:rgba(127,168,143,${Math.min(.5,.1+o.f*.06)})`:''}" onclick="u.cd=${new Date(Y,Mo,n,12).getTime()};render()"><b>${n}</b>${o&&o.f?`<small>🍼${o.f}</small>`:''}${o&&o.ml?`<small>${o.ml}</small>`:''}</button>`}
+ const canNext=new Date(Y,Mo+1,1)<=now;
+ return `<div class="card"><div class="sum"><button class="chip sm" style="flex:0 0 auto" onclick="mon(-1)">◀</button><span>${m0.toLocaleDateString([],{month:'long',year:'numeric'})}</span><button class="chip sm" style="flex:0 0 auto;opacity:${canNext?1:.3}" onclick="mon(1)">▶</button></div><div class="cal">${'SMTWTFS'.split('').map(x=>`<div class="wd">${x}</div>`).join('')}${cells}</div><div class="note" style="margin-top:8px">Each day shows 🍼 feeds and mL fed. Tap a day for details.</div></div>
+ <div class="card"><div class="lbl">${sel.toLocaleDateString([],{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</div><div class="grid">${tile('🍼',so.f,'feeds')}${tile('🥛',so.ml,'mL fed')}${tile('💧',so.p,'mL pumped')}${tile('🧷',so.d,'diapers')}${tile('🌙',+so.s.toFixed(1),'h sleep')}</div></div>
+ <div class="card">${so.l.length?so.l.map(e=>`<div class="hist"><span class="t">${fmt(e.t)}</span><span class="d">${desc(e)}${e.by&&st.fam?`<br><small style="color:var(--mute)">by ${E(e.by)}</small>`:''}</span><button onclick="editE('${e.id}')" aria-label="Edit">✎</button><button onclick="askDel('${e.id}')" aria-label="Delete">✕</button></div>`).join(''):'<div class="empty">Nothing logged this day</div>'}</div>`}
+function add(e){e.u=Date.now();if(st.me)e.by=st.me;st.log.push(e);st.log.sort((a,b)=>b.t-a.t);delete st.nt[e.cat];persist();lastId=e.id;burst();sfx('save');setTimeout(haptic,120);toast(desc(e).replace(/<br>/g,' + ').replace(/<[^>]+>/g,''),1);render();syncSoon();checkStock();if(st.nton)pushSched(e.cat);if(e.cat==='growth')growthSync()}
+function delE(i){const e=st.log.find(x=>x.id===i);if(e){e.del=1;e.u=Date.now();persist();syncSoon();pushSched(e.cat);if(e.cat==='growth')growthSync()}sfx('del');render()}
 function askDel(i){if(confirm('Delete this entry? It will also be removed on your partner’s phone.'))delE(i)}
 function undo(){if(lastId)delE(lastId);$('toast').classList.remove('show')}
-function toast(m){$('tmsg').textContent='Saved · '+m;$('toast').classList.add('show');clearTimeout(tt);tt=setTimeout(()=>$('toast').classList.remove('show'),5000)}
+function toast(m,ent){$('tmsg').textContent=(ent?'Saved · ':'')+m;$('toast').querySelector('button').style.display=ent?'':'none';$('toast').classList.add('show');clearTimeout(tt);tt=setTimeout(()=>$('toast').classList.remove('show'),5000)}
 function burst(){['🍼','💛','⭐','🫧','🌙','🧸'].forEach((c,i)=>{const s=document.createElement('span');s.className='bu';s.textContent=c;s.style.left=(12+Math.random()*70)+'%';s.style.animationDelay=i*70+'ms';document.body.appendChild(s);setTimeout(()=>s.remove(),1600)})}
-function render(){head();$('tabs').innerHTML=TABS.map(([k,i,l])=>`<button class="${u.tab===k?'on':''}" onclick="goTab('${k}')"><span>${i}</span>${l}</button>`).join('');$('main').innerHTML=(u.set?pSet():'')+({feed:pFeed,pump:pPump,diaper:pDia,sleep:pSleep,ins:pIns}[u.tab])();tick()}
+function render(){head();$('tabs').innerHTML=TABS.map(([k,i,l])=>`<button class="${u.tab===k?'on':''}" onclick="goTab('${k}')"><span>${i}</span>${l}</button>`).join('');$('main').innerHTML=(u.set?pSet():'')+alertBar()+({feed:pFeed,pump:pPump,diaper:pDia,sleep:pSleep,growth:pGrowth,shop:pShop,ins:pIns}[u.tab])();tick()}
 function tick(){const now=Date.now();
- if(u.tab==='feed'||u.tab==='pump'){const c=u.tab,l=live().find(e=>e.cat===c),iv=(c==='feed'?st.fi:st.pi)*6e4,box=$('cd');if(box){
+ if(u.tab==='feed'||u.tab==='pump'){const c=u.tab,ses=(u.sw.run||u.sw.acc>0)&&u.sw.cat===c&&!u.edit,l=live().find(e=>e.cat===c),iv=(c==='feed'?st.fi:st.pi)*6e4,box=$('cd');if(box){
   let frac=0,txt='--:--:--',lb=c==='feed'?'No feeds yet':'No pumping yet',sx='Log the first one below',cls='card status',col='url(#gr)';
   if(l){const en=endOf(l),left=en+iv-now,soon=left<=st.lead*6e4;frac=Math.min(1,Math.max(0,(now-en)/iv));sx='Last '+(c==='feed'?'fed ':'pumped ')+dur(now-en)+' ago';
    if(left<=0){cls+=' over';lb=c==='feed'?'Feed is due':'Pump is due';txt='+'+hms(left);col='var(--warn)'}
    else{if(soon)cls+=' soon';lb=soon?'Coming up':'Next '+c+' at '+fmt(en+iv);txt=hms(left)}}
+  if(ses){cls='card status';lb=c==='feed'?'Feeding in progress 🤱':'Pumping in progress 💧';txt=mmss(swNow());sx='Countdown restarts when you save';frac=(swNow()/6e4)%1;col='url(#gr)'}
   box.className=cls;$('sl').textContent=lb;$('sb').textContent=txt;$('sx').textContent=sx;const rp=$('rp');rp.setAttribute('stroke-dashoffset',553*(1-frac));rp.style.stroke=col;$('dot').setAttribute('transform','rotate('+frac*360+' 100 100)')}}
  if($('sw'))$('sw').textContent=mmss(swNow());
  if($('sd')&&st.ss)$('sd').textContent=dur(now-st.ss);
- ['feed','pump'].forEach(c=>{const l=live().find(e=>e.cat===c);if(!l)return;const left=endOf(l)+(c==='feed'?st.fi:st.pi)*6e4-now;
-  if(left<=st.lead*6e4&&st.nt[c]!==l.id){st.nt[c]=l.id;persist();try{if(Notification.permission==='granted')new Notification(c==='feed'?'Feed time soon 🍼':'Pumping time soon 💧',{body:left>0?'In '+dur(left):'It is time'})}catch(e){}try{navigator.vibrate([200,100,200])}catch(e){}}})}
+ ['feed','pump'].forEach(c=>{const l=live().find(e=>e.cat===c);if(!l||((u.sw.run||u.sw.acc>0)&&u.sw.cat===c))return;const left=endOf(l)+(c==='feed'?st.fi:st.pi)*6e4-now;
+  if(left<=st.lead*6e4&&st.nt[c]!==l.id){st.nt[c]=l.id;persist();if(!st.nton)localNotify(c==='feed'?'Feed time soon 🍼':'Pumping time soon 💧',left>0?'In '+dur(left):'It is time');try{navigator.vibrate([200,100,200])}catch(e){}}})}
 /* ---- voice ---- */
 function parse(s){s=s.toLowerCase().replace(/(\d)\s*(?:millilit(?:er|re)s?|mls?|cc)\b/g,'$1ml');let off=0,m,dm=s.match(/for\s+(\d+(?:\.\d+)?)\s*(hours?|hrs?|minutes?|mins?)/);
  if(m=s.match(/(\d+(?:\.\d+)?)\s*(?:hours?|hrs?)\s*ago/))off=m[1]*60;else if(m=s.match(/(\d+)\s*(?:minutes?|mins?)\s*ago/))off=+m[1];else if(/half an hour ago/.test(s))off=30;else if(/an hour ago/.test(s))off=60;
  s=s.replace(/(half an |an )?(\d+(?:\.\d+)?\s*)?(hours?|hrs?|minutes?|mins?)\s*ago|just now/g,' ');const t=Date.now()-off*6e4;
+ {const it=live().filter(e=>e.cat==='item'),mi=x=>it.find(i=>x.includes(i.name.toLowerCase()))||it.find(i=>i.name.toLowerCase().split(/\s+/).some(w=>w.length>3&&x.includes(w.replace(/s$/,''))));
+ let m=s.match(/\badd\s+(.+?)\s+to\s+(?:my\s+|the\s+|our\s+)?(shopping(?:\s+list)?|wish\s?list|to-?do(?:\s+list)?|check\s?list|medicines?(?:\s+list)?)\b/);
+ if(m){const k=/wish/.test(m[2])?'wish':/to-?do|check/.test(m[2])?'todo':/medic/.test(m[2])?'med':'buy';return{id:id(),cat:'todo',text:m[1].replace(/^(some|a|an)\s+/,'').replace(/^./,c=>c.toUpperCase()),kind:k,done:0,t}}
+ m=s.match(/\b(?:bought|purchased)\s+(\d+(?:\.\d+)?|a|an|one|two|three|four|five)?\s*(?:tins?|packs?|packets?|boxes?|bottles?|tubes?)?\s*(?:of\s+)?(.+)/);
+ if(m){const W={a:1,an:1,one:1,two:2,three:3,four:4,five:5},n=m[1]?(W[m[1]]||+m[1]):1,i=mi(m[2]);if(i)return{id:id(),cat:'buy',item:i.id,packs:n,qty:n*(i.pack||1),t}}
+ m=s.match(/\bused\s+(\d+(?:\.\d+)?)\s*(?:g|grams?|ml|pcs?|pieces?)?\s*(?:of\s+)?(.+)/);
+ if(m){const i=mi(m[2]);if(i)return{id:id(),cat:'use',item:i.id,qty:+m[1],t}}}
  if(/\b(sleep|slept|nap|napped)\b/.test(s)){if(!dm)return null;const d=dm[1]*(/^h/.test(dm[2])?60:1);return{id:id(),cat:'sleep',t:t-d*6e4,end:t}}
  if(/diaper|nappy|poo|pee|wet|dirty|soiled|stool/.test(s)){const w=/wet|pee/.test(s),d=/poo|dirty|soiled|stool/.test(s);return{id:id(),cat:'diaper',t,kind:w&&d?'both':d?'dirty':'wet'}}
+ if(/\b(weigh|weight|weighs|height|length|tall|kg|kilos?|kilograms?|cm|centimet(?:er|re)s?)\b/.test(s)){const k=s.match(/(\d+(?:\.\d+)?)\s*(?:kg|kilos?|kilograms?)/),c=s.match(/(\d+(?:\.\d+)?)\s*(?:cm|centimet(?:er|re)s?)/);if(k||c){const g={id:id(),cat:'growth',t};if(k)g.kg=+k[1];if(c)g.cm=+c[1];return g}}
  const sd=c=>/\bboth\b/.test(c)?['L','R']:[/\bleft\b/.test(c)&&'L',/\bright\b/.test(c)&&'R'].filter(Boolean),mls=c=>[...c.matchAll(/(\d+)\s*ml/g)].map(x=>+x[1]);
- if(/pump/.test(s))return{id:id(),cat:'pump',t,sides:sd(s),ml:mls(s).reduce((a,b)=>a+b,0)};
+ let dmin=null,d2;if(d2=s.match(/(?:for|lasted|took)\s+(?:about\s+|around\s+|roughly\s+)?(\d+(?:\.\d+)?)\s*(hours?|hrs?|minutes?|mins?)/))dmin=d2[1]*(/^h/.test(d2[2])?60:1);else if(/(?:for|lasted|took)\s+(?:about\s+)?half an hour/.test(s))dmin=30;else if(/for\s+(?:about\s+)?an hour/.test(s))dmin=60;
+ if(/pump/.test(s)){const pe={id:id(),cat:'pump',t,sides:sd(s),ml:mls(s).reduce((a,b)=>a+b,0)};if(dmin){pe.secs=Math.round(dmin*60);pe.t-=pe.secs*1000}return pe}
  const cl=s.split(/(?:and\s+)?(?:then\s+)?(?:topped|topping|top)\s*(?:it\s*)?up(?:\s+(?:with|using))?|\band then\b|\bthen\b/);let sides=[],bottle=null,bml=0;
  cl.forEach((c,i)=>{const cs=sd(c),isB=/formula|express|ebm|bottle|paladai|palad|nifty|\bcup\b|own milk|my milk/.test(c)||(i>0&&!cs.length&&/ml/.test(c));
   if(isB){const ml=mls(c)[0];bottle={ml:ml||+u.f.ml,milk:/formula/.test(c)?'formula':/express|ebm|own|my (breast )?milk/.test(c)?'ebm':'formula',via:/palad/.test(c)?'paladai':/nifty|cup/.test(c)?'cup':'bottle'}}
   else if(cs.length||/breast|nurs|latch/.test(c)){cs.forEach(x=>{if(!sides.includes(x))sides.push(x)});bml+=mls(c)[0]||0}});
- if(!sides.length&&!bottle)return null;const e={id:id(),cat:'feed',t,sides,bottle};if(bml)e.bml=bml;return e}
+ if(!sides.length&&!bottle)return null;const e={id:id(),cat:'feed',t,sides,bottle};if(bml)e.bml=bml;if(dmin&&sides.length){e.secs=Math.round(dmin*60);e.t-=e.secs*1000}return e}
 function vOpen(){$('vs').classList.remove('hide');$('vt').value='';vMic()}
 function vClose(){try{rec&&rec.stop()}catch(e){}$('vs').classList.add('hide')}
-function vMic(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition,no=()=>{$('vst').textContent='Voice isn’t available here — type it instead ✍️'};if(!SR)return no();
+function vMic(){if(hfOn)hfStop();const SR=window.SpeechRecognition||window.webkitSpeechRecognition,no=()=>{$('vst').textContent='Voice isn’t available here — type it instead ✍️'};if(!SR)return no();
  try{rec=new SR();rec.lang=navigator.language||'en-US';rec.interimResults=true;rec.onstart=()=>{$('vst').textContent='Listening… 🎤'};
  rec.onresult=ev=>{let t='',fin=false;for(const r of ev.results){t+=r[0].transcript;if(r.isFinal)fin=true}$('vt').value=t;if(fin)setTimeout(vGo,400)};rec.onerror=no;rec.start()}catch(e){no()}}
-function vGo(){const t=$('vt').value.trim();if(!t)return;try{rec&&rec.stop()}catch(e){}const e=parse(t);if(!e){$('vst').textContent='Couldn’t catch that — edit the text or try again';return}$('vt').value='';vClose();add(e)}
+function vGo(){const t=$('vt').value.trim();if(!t)return;try{rec&&rec.stop()}catch(e){}if(!handleVoice(t,false)){$('vst').textContent='Couldn’t catch that — edit the text or try again';return}$('vt').value='';vClose()}
 /* ---- partner sync: Firebase Realtime Database REST, offline-first ---- */
 const DB=((window.CFG&&CFG.dbUrl)||'').replace(/\/$/,'');
 let syncing=false,syncT,sMsg=st.fam?'Waiting to sync…':'';
@@ -233,7 +270,7 @@ async function sync(){
   else if(st.cu>((c&&c.u)||0))await fetch(`${base}/cfg.json`,{method:'PUT',body:JSON.stringify({baby:st.baby,fi:st.fi,pi:st.pi,lead:st.lead,ss:st.ss||0,u:st.cu})});
   persist();sMsg='Synced '+fmt(Date.now())}
  catch(e){sMsg='Can’t reach sync right now — will retry'}
- syncing=false;paintSync();
+ syncing=false;paintSync();if(changed&&st.nton)pushAll();
  if(changed&&!/INPUT|TEXTAREA/.test((document.activeElement||{}).tagName||''))render()}
 function newFam(){const a=new Uint8Array(16);crypto.getRandomValues(a);st.fam=[...a].map(x=>'abcdefghjkmnpqrstuvwxyz23456789'[x%31]).join('');st.cu=Date.now();st.sy={pushed:0,pulled:0};persist();sMsg='Waiting to sync…';render();sync()}
 function joinFam(c){c=(c||'').trim().toLowerCase().replace(/[^a-z0-9]/g,'');if(c.length<12)return;st.fam=c;st.cu=0;st.sy={pushed:0,pulled:0};persist();sMsg='Joining…';render();sync()}
@@ -244,6 +281,123 @@ addEventListener('online',()=>{head();sync()});addEventListener('offline',head);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync()});
 setInterval(()=>{if(!document.hidden)sync()},15000);
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+/* ---- phone push reminders via ntfy.sh ---- */
+const NT='https://ntfy.sh',rnd=()=>{const a=new Uint8Array(16);crypto.getRandomValues(a);return[...a].map(x=>'abcdefghjkmnpqrstuvwxyz23456789'[x%31]).join('')};
+const ntTopic=()=>'lf-'+(st.fam||st.ntq||'');
+async function ntDel(c){try{await fetch(`${NT}/${ntTopic()}/lf-${c}`,{method:'DELETE'})}catch(e){}}
+async function ntSend(o){try{await fetch(NT,{method:'POST',body:JSON.stringify(Object.assign({topic:ntTopic()},o))})}catch(e){}}
+async function pushSched(c){if(!st.nton||(c!=='feed'&&c!=='pump'))return;await ntDel(c);const l=live().find(e=>e.cat===c);if(!l)return;
+ const due=endOf(l)+(c==='feed'?st.fi:st.pi)*6e4;if(due<=Date.now())return;const secs=Math.max(10,Math.round((due-st.lead*6e4-Date.now())/1e3));
+ ntSend({title:c==='feed'?'Feed time soon 🍼':'Pumping time soon 💧',message:'Due around '+fmt(due),delay:secs+'s',sequence_id:'lf-'+c,tags:[c==='feed'?'baby_bottle':'droplet']})}
+const pushAll=()=>{pushSched('feed');pushSched('pump')};
+function ntToggle(){st.nton=!st.nton;if(st.nton&&!st.fam&&!st.ntq)st.ntq=rnd();if(!st.nton){ntDel('feed');ntDel('pump')}persist();render();if(st.nton)pushAll()}
+async function ntTest(){await ntSend({title:'Little Feeds test 🍼',message:'Push reminders are working.',tags:['white_check_mark']});toast('test sent')}
+async function ntCopy(){try{await navigator.clipboard.writeText(ntTopic());toast('topic copied')}catch(e){}}
+function localNotify(t,b){try{if(Notification.permission!=='granted')return;if(navigator.serviceWorker)navigator.serviceWorker.ready.then(r=>r.showNotification(t,{body:b,icon:'icon-192.png',tag:t})).catch(()=>{});else new Notification(t,{body:b})}catch(e){}}
+
+/* ---- growth log ---- */
+const ymd=t=>new Date(t-new Date(t).getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const gBase=k=>{const a=live().filter(e=>e.cat==='growth'&&e[k]).sort((x,y)=>y.t-x.t)[0];return a?a[k]:(k==='kg'?(+st.baby.kg||3.5):50)};
+function growthSync(){const g=live().filter(e=>e.cat==='growth'&&e.kg).sort((a,b)=>b.t-a.t)[0];if(g&&String(st.baby.kg)!==String(g.kg)){st.baby.kg=g.kg;touch()}}
+function gAge(t){const d=st.baby.dob;if(!d)return'';const days=Math.floor((t-new Date(d))/864e5);if(days<0)return'';const w=Math.floor(days/7);return w<12?'week '+w:Math.floor(days/30.44)+' months'}
+function gst(k,d){const b=u.g[k]!=null&&u.g[k]!==''?+u.g[k]:gBase(k);u.g[k]=Math.max(0,+(b+d).toFixed(2));render()}
+function lineChart(pts,unit,col){if(pts.length<2)return '<div class="empty">Add at least 2 measurements to see the chart</div>';
+ const W=320,H=160,L=38,R=16,T=18,B=26,t0=pts[0].t,t1=pts[pts.length-1].t,vs=pts.map(p=>p.v),lo=Math.min(...vs),hi=Math.max(...vs),pad=(hi-lo||1)*.3,y0=lo-pad,y1=hi+pad;
+ const X=t=>(L+(t1===t0?0:(t-t0)/(t1-t0))*(W-L-R)).toFixed(1),Y=v=>(T+(1-(v-y0)/(y1-y0))*(H-T-B)).toFixed(1),dl=t=>new Date(t).toLocaleDateString([],{day:'numeric',month:'short'});
+ const grid=[0,.5,1].map(f=>{const v=y0+(y1-y0)*f,y=Y(v);return `<line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" style="stroke:var(--line)"/><text x="${L-5}" y="${+y+4}" text-anchor="end" font-size="10" style="fill:var(--mute)">${v.toFixed(unit==='kg'?2:1)}</text>`}).join('');
+ const path=pts.map((p,i)=>(i?'L':'M')+X(p.t)+' '+Y(p.v)).join(' '),last=pts[pts.length-1];
+ return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto">${grid}<path d="${path} L${X(t1)} ${H-B} L${X(t0)} ${H-B} Z" fill="${col}" opacity=".13"/><path d="${path}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>${pts.map(p=>`<circle cx="${X(p.t)}" cy="${Y(p.v)}" r="4" stroke="${col}" stroke-width="2.5" style="fill:var(--card)"/>`).join('')}<text x="${X(last.t)}" y="${+Y(last.v)-10}" text-anchor="end" font-size="11" font-weight="700" fill="${col}">${last.v} ${unit}</text><text x="${L}" y="${H-8}" font-size="10" style="fill:var(--mute)">${dl(t0)}</text><text x="${W-R}" y="${H-8}" text-anchor="end" font-size="10" style="fill:var(--mute)">${dl(t1)}</text></svg>`}
+function pGrowth(){const G=live().filter(e=>e.cat==='growth').sort((a,b)=>a.t-b.t),W=G.filter(e=>e.kg),Hh=G.filter(e=>e.cm),g=u.g=u.g||{kg:null,cm:null,date:ymd(Date.now())},lw=W[W.length-1],lh=Hh[Hh.length-1];
+ const sg=(d,f)=>(d<0?'−':'+')+f(Math.abs(d)),fkg=d=>d<1?Math.round(d*1000)+' g':d.toFixed(2)+' kg',fcm=d=>d.toFixed(1)+' cm';
+ const chg=(A,k,f)=>A.length>1?sg(A[A.length-1][k]-A[A.length-2][k],f):'—',wk=(A,k,f)=>{if(A.length<2)return'—';const a=A[0],z=A[A.length-1],w=(z.t-a.t)/6048e5;return w>0?sg((z[k]-a[k])/w,f)+'/wk':'—'};
+ const last=G[G.length-1],ds=last?Math.floor((Date.now()-last.t)/864e5):null;
+ const hint=ds===null?'Log the first measurement below':ds>=7?`⏰ Weekly check-in due · last measured ${ds} days ago`:`Last measured ${ds===0?'today':ds+' day'+(ds>1?'s':'')+' ago'}`;
+ let pk=null,pc=null;const rows=G.map(e=>{const r=`<div class="hist"><span class="t" style="width:90px">${new Date(e.t).toLocaleDateString([],{day:'numeric',month:'short',year:'2-digit'})}<br><small>${gAge(e.t)}</small></span><span class="d">${e.kg?`⚖️ ${e.kg} kg${pk!=null?` <small style="color:var(--accd)">${sg(e.kg-pk,fkg)}</small>`:''}`:''}${e.kg&&e.cm?'<br>':''}${e.cm?`📏 ${e.cm} cm${pc!=null?` <small style="color:var(--accd)">${sg(e.cm-pc,fcm)}</small>`:''}`:''}</span><button onclick="editE('${e.id}')" aria-label="Edit">✎</button><button onclick="askDel('${e.id}')" aria-label="Delete">✕</button></div>`;if(e.kg)pk=e.kg;if(e.cm)pc=e.cm;return r}).reverse().join('');
+ const inp=(k,u2,st2)=>`<div class="stepper"><button onclick="gst('${k}',-${st2})">−</button><input type="number" inputmode="decimal" step="0.01" placeholder="${gBase(k)}" value="${g[k]==null?'':g[k]}" oninput="u.g['${k}']=this.value===''?null:+this.value"><span>${u2}</span><button onclick="gst('${k}',${st2})">+</button></div>`;
+ return `<div class="card status"><div class="lbl" style="margin:0">${hint}</div></div>
+ <div class="card">${u.edit?`<div class="hint" style="margin:0 0 10px">✎ Editing a measurement <button class="link" style="margin:0 0 0 8px" onclick="cancelEdit()">Cancel</button></div>`:''}<div class="lbl">Weight</div>${inp('kg','kg','.05')}<div class="lbl">Length / height</div>${inp('cm','cm','.5')}<div class="lbl">Date measured</div><input class="tx" type="date" style="width:100%" max="${ymd(Date.now())}" value="${g.date}" onchange="u.g.date=this.value"><button class="save" onclick="saveGrowth()">${u.edit?'Update measurement':'Save measurement'}</button><div class="note" style="margin-top:8px">Fill in one or both. Leave a box empty if you didn't measure it.</div></div>
+ <div class="card"><div class="lbl">Weight</div><div class="grid">${tile('⚖️',lw?lw.kg+' kg':'—','now')}${tile('📈',chg(W,'kg',fkg),'since last')}${tile('📊',wk(W,'kg',fkg),'average')}</div></div>
+ <div class="card"><div class="lbl">Length / height</div><div class="grid">${tile('📏',lh?lh.cm+' cm':'—','now')}${tile('📈',chg(Hh,'cm',fcm),'since last')}${tile('📊',wk(Hh,'cm',fcm),'average')}</div></div>
+ <div class="card"><div class="lbl">Weight over time (kg)</div>${lineChart(W.map(e=>({t:e.t,v:e.kg})),'kg','#7fa88f')}</div>
+ <div class="card"><div class="lbl">Length over time (cm)</div>${lineChart(Hh.map(e=>({t:e.t,v:e.cm})),'cm','#e0956a')}</div>
+ <div class="card"><div class="sum"><span>Growth log book</span><span>${G.length}</span></div>${rows||'<div class="empty">No measurements yet 🌱</div>'}</div>
+ <div class="note">Compare these numbers with the growth charts your paediatrician uses. Every baby grows at their own pace 💛</div>`}
+function saveGrowth(){const g=u.g;if(!g||!g.date||!(g.kg>0||g.cm>0))return;const t=new Date(g.date+'T12:00').getTime();
+ if(u.edit){const e=st.log.find(x=>x.id===u.edit&&x.cat==='growth');if(e){e.t=t;if(g.kg>0)e.kg=+g.kg;else delete e.kg;if(g.cm>0)e.cm=+g.cm;else delete e.cm;e.u=Date.now();finishEdit('growth');return}}
+ const e={id:id(),cat:'growth',t};if(g.kg>0)e.kg=+g.kg;if(g.cm>0)e.cm=+g.cm;u.g=null;add(e)}
+
+/* ---- shopping & stock ---- */
+const TRK=['feed','pump','diaper','sleep','growth'],SH={todo:1,buy:1,use:1,item:1};
+const num=x=>Math.round(x*10)/10;
+function itm(i){return live().find(e=>e.id===i&&e.cat==='item')}
+function stock(it){const L=live(),DAY=864e5,now=Date.now(),b=L.filter(e=>e.cat==='buy'&&e.item===it.id),mu=L.filter(e=>e.cat==='use'&&e.item===it.id),since=Math.min(it.t,...b.map(e=>e.t));
+ const auto=(a,z)=>it.auto==='formula'?L.reduce((x,e)=>e.cat==='feed'&&e.bottle&&e.bottle.milk==='formula'&&e.t>=a&&e.t<z?x+(e.bottle.ml||0)*(it.per100||13)/100:x,0):it.auto==='diaper'?L.reduce((x,e)=>e.cat==='diaper'&&e.t>=a&&e.t<z?x+1:x,0):0;
+ const man=(a,z)=>mu.reduce((x,e)=>e.t>=a&&e.t<z?x+e.qty:x,0),buy=b.reduce((x,e)=>x+e.qty,0),spent=b.reduce((x,e)=>x+(e.price||0),0),use=auto(since,now+1)+mu.reduce((x,e)=>x+e.qty,0),on=buy-use;
+ const d=Math.max(1,Math.min(7,(now-since)/DAY)),rate=(auto(now-d*DAY,now+1)+man(now-d*DAY,now+1))/d,dl=rate>0?on/rate:null;
+ return{buy,use,on,rate,dl,spent,st:!b.length?'new':on<=0?'out':(dl!=null&&dl<=(it.thr||7))?'low':'ok'}}
+const stockAlerts=()=>live().filter(e=>e.cat==='item').map(it=>({it,s:stock(it)})).filter(x=>x.s.st==='low'||x.s.st==='out');
+function alertBar(){if(u.tab==='shop')return'';const a=stockAlerts();return a.length?`<button class="card alert" onclick="goTab('shop')">🛒 ${a.map(x=>E(x.it.name)+(x.s.st==='out'?': out':': ~'+Math.max(0,Math.round(x.s.dl))+' days left')).join(' · ')}</button>`:''}
+function checkStock(){const day=ymd(Date.now());st.sa=st.sa||{};stockAlerts().forEach(({it,s})=>{if(st.sa[it.id]===day)return;st.sa[it.id]=day;persist();const m=s.st==='out'?it.name+' has run out':it.name+': about '+Math.max(0,Math.round(s.dl))+' day(s) left';if(st.nton)ntSend({title:'Time to restock 🛒',message:m,sequence_id:'lf-stock-'+it.id+'-'+day,tags:['shopping_cart']});else localNotify('Time to restock 🛒',m)})}
+function spOpen(mode,id,e){if(u.edit)clearEdit();u.sp={mode,id,edit:e?e.id:null};const x=e||{};
+ if(mode==='item')u.sf={name:x.name||'',unit:x.unit||'g',pack:x.pack||'',pn:x.pn||'pack',thr:x.thr||7,auto:x.auto||'',per100:x.per100||13,date:ymd(x.t||Date.now())};
+ else if(mode==='buy')u.sf={packs:e?e.packs:1,price:e&&e.price?e.price:'',date:ymd(e?e.t:Date.now())};
+ else u.sf={qty:e?e.qty:'',date:ymd(e?e.t:Date.now())};
+ u.tab='shop';u.sh='sup';render();scrollTo(0,0)}
+function spPreset(k){const P={formula:{name:'Formula powder',unit:'g',pack:400,pn:'tin',auto:'formula'},diaper:{name:'Diapers',unit:'pcs',pack:50,pn:'pack',auto:'diaper'},wipes:{name:'Baby wipes',unit:'pcs',pack:80,pn:'pack',auto:''},cream:{name:'Diaper cream',unit:'g',pack:100,pn:'tube',auto:''},other:{name:'',unit:'units',pack:1,pn:'pack',auto:''}};Object.assign(u.sf,P[k]);render()}
+function spH(){const p=u.sp;if(!p)return'';const f=u.sf,it=itm(p.id)||{};
+ const I=(k,l,t,ph)=>`<div class="lbl" style="margin-top:12px">${l}</div><input class="tx" style="width:100%" type="${t||'number'}" ${(t||'number')==='number'?'inputmode="decimal" step="any"':''} placeholder="${ph||''}" value="${E(f[k])}" oninput="u.sf['${k}']=this.value">`;
+ const C=(k,a)=>`<div class="row">${a.map(([v,l])=>ch(l,f[k]===v,`u.sf['${k}']='${v}';render()`,'sm')).join('')}</div>`;
+ const bt=`<button class="save" onclick="spSave()">Save</button><div class="row" style="margin-top:8px">${ch('Cancel',0,'u.sp=null;render()','sm')}${p.mode==='item'&&p.edit?ch('Delete supply',0,'spDel()','sm'):''}</div>`;
+ if(p.mode==='item')return `<div class="card"><div class="lbl">${p.edit?'Edit supply':'New supply to track'}</div>${p.edit?'':`<div class="row">${[['formula','Formula'],['diaper','Diapers'],['wipes','Wipes'],['cream','Diaper cream'],['other','Custom']].map(([k,l])=>ch(l,0,`spPreset('${k}')`,'sm')).join('')}</div>`}${I('name','Name','text','e.g. Formula powder')}<div class="lbl" style="margin-top:12px">Counted in</div>${C('unit',[['g','grams'],['ml','mL'],['pcs','pieces'],['units','units']])}${I('pack','Size of one pack (in the unit above)','number','e.g. 400')}<div class="lbl" style="margin-top:12px">One pack is a</div>${C('pn',[['tin','tin'],['pack','pack'],['box','box'],['bottle','bottle'],['tube','tube']])}<div class="lbl" style="margin-top:12px">Usage is worked out from</div>${C('auto',[['','What I log as used'],['formula','Formula feeds'],['diaper','Diaper log']])}${f.auto==='formula'?I('per100','Powder per 100 mL of milk (g), check your tin','number','13'):''}${I('thr','Alert me when this many days are left','number','7')}${I('date','Tracking starts on','date')}${bt}</div>`;
+ if(p.mode==='buy')return `<div class="card"><div class="lbl">${p.edit?'Edit purchase':'Bought'}: <b>${E(it.name)}</b></div>${I('packs','How many '+it.pn+'s ('+it.pack+' '+it.unit+' each)','number','1')}${I('price','Price paid (optional)','number','')}${I('date','Date bought','date')}${bt}</div>`;
+ return `<div class="card"><div class="lbl">${p.edit?'Edit usage':'Used'}: <b>${E(it.name)}</b></div>${I('qty','How much was used ('+it.unit+')','number','')}${I('date','Date','date')}${bt}</div>`}
+function spSave(){const p=u.sp,f=u.sf,now=Date.now(),T=d=>d===ymd(now)?now:new Date(d+'T12:00').getTime(),ed=()=>st.log.find(x=>x.id===p.edit);
+ if(p.mode==='item'){if(!(f.name||'').trim())return;const o={name:f.name.trim(),unit:f.unit,pack:+f.pack||1,pn:f.pn,thr:+f.thr||7,auto:f.auto||null,per100:+f.per100||13,t:new Date((f.date||ymd(now))+'T00:00').getTime()};if(p.edit){const e=ed();if(e){Object.assign(e,o);e.u=now}}else add(Object.assign({id:id(),cat:'item'},o))}
+ else{const it=itm(p.id)||{};if(p.mode==='buy'){const k=+f.packs;if(!(k>0))return;const o={packs:k,qty:k*(it.pack||1),price:+f.price>0?+f.price:null,t:T(f.date)};if(p.edit){const e=ed();if(e){Object.assign(e,o);e.u=now}}else add(Object.assign({id:id(),cat:'buy',item:p.id},o))}
+  else{const q=+f.qty;if(!(q>0))return;const o={qty:q,t:T(f.date)};if(p.edit){const e=ed();if(e){Object.assign(e,o);e.u=now}}else add(Object.assign({id:id(),cat:'use',item:p.id},o))}}
+ st.log.sort((a,b)=>b.t-a.t);persist();syncSoon();u.sp=null;render();checkStock()}
+function spDel(){if(!confirm('Delete this supply and its purchase history?'))return;const now=Date.now();st.log.forEach(e=>{if(e.id===u.sp.edit||e.item===u.sp.edit){e.del=1;e.u=now}});persist();syncSoon();u.sp=null;render()}
+function addToList(i){const it=itm(i);if(!it)return;const tx='Buy '+it.name;if(live().some(e=>e.cat==='todo'&&!e.done&&e.text===tx)){toast('already on your list');return}add({id:id(),cat:'todo',text:tx,kind:'buy',done:0,t:Date.now()})}
+function shopEdit(e){if(e.cat==='todo'){const t=prompt('Edit item',e.text);if(t&&t.trim()){e.text=t.trim();const n=prompt('Note / dose (optional)',e.note||'');if(n!==null)e.note=n.trim()||null;e.u=Date.now();persist();syncSoon();render()}}else if(e.cat==='item')spOpen('item',e.id,e);else spOpen(e.cat,e.item,e)}
+function tdone(i){const e=st.log.find(x=>x.id===i);if(!e)return;e.done=e.done?0:1;e.u=Date.now();persist();syncSoon();sfx('tap');render()}
+function tclear(k){if(!confirm('Remove completed items?'))return;const now=Date.now();live().forEach(e=>{if(e.cat==='todo'&&e.kind===k&&e.done){e.del=1;e.u=now}});persist();syncSoon();render()}
+function tdAdd(){const x=($('tdx').value||'').trim();if(!x)return;const k=u.sh==='med'?'med':(['buy','wish','todo'].includes(u.tk)?u.tk:'buy'),n=($('tdn').value||'').trim();add({id:id(),cat:'todo',text:x,note:n||undefined,kind:k,done:0,t:Date.now()})}
+const trow=e=>`<div class="hist"><button class="chk ${e.done?'on':''}" onclick="tdone('${e.id}')" aria-label="Done">${e.done?'✓':''}</button><span class="d" style="${e.done?'text-decoration:line-through;opacity:.6':''}">${E(e.text)}${e.note?`<br><small style="color:var(--mute)">${E(e.note)}</small>`:''}</span><button onclick="editE('${e.id}')" aria-label="Edit">✎</button><button onclick="askDel('${e.id}')" aria-label="Delete">✕</button></div>`;
+function pList(sub){const med=sub==='med',kinds=med?['med']:['buy','wish','todo'],K={buy:'🛒 To buy',wish:'⭐ Wishlist',todo:'✅ To-do',med:'💊 Medicines'},k=kinds.includes(u.tk)?u.tk:kinds[0];
+ const form=`<div class="card">${med?'':`<div class="row" style="margin-bottom:10px">${kinds.map(x=>ch(K[x],k===x,`u.tk='${x}';render()`,'sm')).join('')}</div>`}<input class="tx" id="tdx" style="width:100%" placeholder="${med?'Medicine name, e.g. Paracetamol drops':'Add an item…'}" onkeydown="if(event.key==='Enter')tdAdd()"><input class="tx" id="tdn" style="width:100%;margin-top:8px" placeholder="${med?'Dose, how often, who prescribed (optional)':'Note (optional)'}" onkeydown="if(event.key==='Enter')tdAdd()"><button class="save" onclick="tdAdd()">Add</button></div>`;
+ const sec=x=>{const A=live().filter(e=>e.cat==='todo'&&e.kind===x).sort((a,b)=>((a.done||0)-(b.done||0))||(b.t-a.t));return `<div class="card"><div class="sum"><span>${K[x]}</span><span>${A.filter(e=>!e.done).length} open</span></div>${A.length?A.map(trow).join(''):'<div class="empty">Nothing here yet</div>'}${A.some(e=>e.done)?`<button class="link" onclick="tclear('${x}')">Clear completed</button>`:''}</div>`};
+ return form+kinds.map(sec).join('')}
+function scard({it,s}){const rd=s.dl!=null?new Date(Date.now()+s.dl*864e5).toLocaleDateString([],{day:'numeric',month:'short'}):'',bad=s.st==='low'||s.st==='out';
+ return `<div class="card ${bad?'low':''}"><div class="sum"><span>${E(it.name)}</span><span style="color:var(--warn)">${s.st==='out'?'Out of stock':s.st==='low'?'Reorder soon':''}</span></div><div style="font-size:28px;font-weight:700">${num(Math.max(0,s.on))} <small style="font-size:14px;color:var(--mute)">${it.unit} left</small></div><div class="lbl">${s.st==='new'?'Log a purchase to start tracking':`≈ ${num(Math.max(0,s.on)/(it.pack||1))} ${it.pn}s${s.dl!=null?` · about ${Math.max(0,Math.round(s.dl))} days left · runs out ~${rd}`:''}`}</div><div class="bar"><i style="width:${s.buy>0?Math.max(0,Math.min(100,s.on/s.buy*100)):0}%"></i></div><div class="grid">${tile('🛍️',num(s.buy),it.unit+' bought')}${tile('📉',num(s.use),it.unit+' used')}${tile('⏱️',s.rate?num(s.rate):'—',it.unit+'/day')}</div><div class="note" style="margin-top:8px">${it.auto==='formula'?`Auto-counted from formula bottles in your feed log (${it.per100||13} g per 100 mL)`:it.auto==='diaper'?'Auto-counted from your diaper log (1 per change)':'Counted from the usage you log'}${s.spent?` · Spent ${num(s.spent)}`:''} · Alert at ${it.thr||7} days left</div><div class="row" style="margin-top:10px">${ch('➕ Bought',0,`spOpen('buy','${it.id}')`,'sm')}${ch('➖ Used',0,`spOpen('use','${it.id}')`,'sm')}${ch('🛒 To list',0,`addToList('${it.id}')`,'sm')}${ch('✎ Edit',0,`spOpen('item','${it.id}',itm('${it.id}'))`,'sm')}</div></div>`}
+function pSup(){const its=live().filter(e=>e.cat==='item').sort((a,b)=>a.name.localeCompare(b.name)),S=its.map(it=>({it,s:stock(it)})),al=S.filter(x=>x.s.st==='low'||x.s.st==='out'),H=live().filter(e=>(e.cat==='buy'||e.cat==='use')&&itm(e.item)).sort((a,b)=>b.t-a.t).slice(0,25);
+ if(u.sp)return spH();
+ return (al.length?`<div class="card low"><div class="lbl" style="margin:0 0 6px">🛒 Time to restock</div>${al.map(x=>`<div class="sum"><span>${E(x.it.name)}</span><span style="color:var(--warn)">${x.s.st==='out'?'Out':'~'+Math.max(0,Math.round(x.s.dl))+' days left'}</span></div>`).join('')}</div>`:'')+S.map(scard).join('')
+ +`<div class="card"><button class="save" style="margin:0" onclick="spOpen('item',null,null)">➕ Add a supply to track</button>${its.length?'':'<div class="note" style="margin-top:8px">Track formula powder, diapers, wipes and more. Log what you buy, and the app works out what is left and when to reorder.</div>'}</div>`
+ +(H.length?`<div class="card"><div class="sum"><span>Purchases &amp; usage</span><span>${H.length}</span></div>${H.map(e=>`<div class="hist"><span class="t" style="width:70px">${new Date(e.t).toLocaleDateString([],{day:'numeric',month:'short'})}</span><span class="d">${desc(e)}</span><button onclick="editE('${e.id}')" aria-label="Edit">✎</button><button onclick="askDel('${e.id}')" aria-label="Delete">✕</button></div>`).join('')}</div>`:'')}
+function pShop(){const sub=u.sh||'sup';return `<div class="card"><div class="row">${ch('📦 Supplies',sub==='sup',"u.sh='sup';render()")}${ch('🛒 Lists',sub==='list',"u.sh='list';render()")}${ch('💊 Medicines',sub==='med',"u.sh='med';render()")}</div></div>`+(sub==='sup'?pSup():pList(sub))}
+
+/* ---- voice commands & hands-free ---- */
+let hf=null,hfOn=false;
+function hfUi(){const f=$('fab'),b=$('hfb');if(f){f.classList.toggle('live',hfOn);f.textContent=hfOn?'🎧':'🎤'}if(b)b.textContent='🎧 Hands-free: '+(hfOn?'on':'off')}
+function hfToggle(){hfOn?hfStop():hfStart()}
+function hfStop(){hfOn=false;try{hf&&hf.stop()}catch(e){}hfUi()}
+function hfStart(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){$('vst').textContent='Voice isn’t available here';return}try{rec&&rec.stop()}catch(e){}hfOn=true;hfUi();$('vst').textContent='Hands-free is on: say “start timer”…';
+ const go=()=>{if(!hfOn)return;try{hf=new SR();hf.lang=navigator.language||'en-US';hf.continuous=true;hf.interimResults=false;
+  hf.onresult=ev=>{for(let i=ev.resultIndex;i<ev.results.length;i++)if(ev.results[i].isFinal)handleVoice(ev.results[i][0].transcript,true)};
+  hf.onend=()=>{if(hfOn)setTimeout(go,400)};hf.onerror=e=>{if(e.error==='not-allowed'||e.error==='service-not-allowed'){hfStop();toast('microphone is blocked')}};hf.start()}catch(e){}};go()}
+function handleVoice(t,hands){const s=t.toLowerCase().trim();if(voiceCmd(s))return true;if(hands&&!/^(log|add|record|bought|used|weight)\b/.test(s))return false;const e=parse(t);if(!e)return false;add(e);return true}
+function vStart(cat,sides){if(u.edit)clearEdit();u.tab=cat;const k=cat==='feed'?'f':'p';if(sides.length)u[k].s=[...sides];if(!u.sw.run){u.sw.start=Date.now();u.sw.run=true;u.sw.cat=cat;if(st.nton)ntDel(cat)}swSave();sfx('save');haptic();toast((cat==='feed'?'Feed':'Pump')+' timer started'+(sides.length?' · '+sideL(sides):''));render()}
+function vPause(){if(!u.sw.run){toast('no timer is running');return true}u.sw.acc+=Date.now()-u.sw.start;u.sw.run=false;swSave();render();toast('timer paused at '+mmss(u.sw.acc));return true}
+function vSave(cat,s,sides){if(!(u.sw.run||u.sw.acc)){toast('no timer to save');return true}const c=u.sw.cat||cat;if(u.sw.run){u.sw.acc+=Date.now()-u.sw.start;u.sw.run=false}if(u.edit)clearEdit();u.tab=c;if(sides.length)u[c==='feed'?'f':'p'].s=[...sides];
+ if(c==='feed'){if(!u.f.s.length){swSave();render();toast('which side? say left, right or both, then “save”');return true}saveFeed()}
+ else{const m=s.replace(/(\d)\s*(?:millilit(?:er|re)s?|mls?)\b/g,'$1ml').match(/(\d+)\s*ml/);u.p.ml=m?+m[1]:0;savePump()}return true}
+function voiceCmd(s){const T=/\b(timer|stopwatch|feeding|feed|nursing|pumping|pump|session)\b/.test(s),cat=/pump/.test(s)?'pump':/\b(feed|feeding|nursing|breast|latch)\b/.test(s)?'feed':(u.sw.cat||(u.tab==='pump'?'pump':'feed')),sides=/\bboth\b/.test(s)?['L','R']:[/\bleft\b/.test(s)&&'L',/\bright\b/.test(s)&&'R'].filter(Boolean);
+ if(/\b(cancel|reset|discard)\b/.test(s)&&T){swReset();toast('timer reset');return true}
+ if((/\b(save|finish|finished|done|end)\b/.test(s)&&T)||/^(i'?m )?(done|finished|save)\b/.test(s))return vSave(cat,s,sides);
+ if(/\b(stop|pause|hold)\b/.test(s)&&(T||/^(stop|pause)\b/.test(s)))return vPause();
+ if(/\b(start|begin|resume|continue)\b/.test(s)&&T&&!/\d\s*ml\b/.test(s)){if((u.sw.run||u.sw.acc)&&u.sw.cat&&u.sw.cat!==cat){toast('finish the other timer first');return true}vStart(cat,sides);return true}
+ if(/\b(switch|change)\b/.test(s)&&sides.length&&(u.sw.run||u.sw.acc)){const k=u.sw.cat==='pump'?'p':'f';sides.forEach(x=>{if(!u[k].s.includes(x))u[k].s.push(x)});render();toast('switched to '+sideL(sides));return true}
+ return false}
 /* ---- background colour ---- */
 const BGS=[['#faf6f0','Cream'],['#eaf4ee','Mint'],['#e8f1fa','Sky'],['#fbeceb','Blush'],['#f0ecf8','Lavender'],['#fbf5dc','Butter'],['#fdeee3','Peach'],['#1d1f1c','Night']];
 function applyBg(){const r=document.documentElement,c=st.bg;if(!c){r.removeAttribute('data-theme');r.style.removeProperty('--bg')}else{const n=parseInt(c.slice(1),16),L=(.299*(n>>16)+.587*(n>>8&255)+.114*(n&255))/255;r.setAttribute('data-theme',L<.45?'dark':'light');r.style.setProperty('--bg',c)}
@@ -261,5 +415,5 @@ document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.clos
 function showVerse(){if(st.vv===false)return;let i=Math.floor(Math.random()*VERSES.length);try{if(i===+localStorage.getItem('lfv'))i=(i+1)%VERSES.length;localStorage.setItem('lfv',i)}catch(e){}
  const [r,t]=VERSES[i],d=document.createElement('div');d.className='vm';d.innerHTML=`<div class="vc"><div style="font-size:34px" class="fl">🕊️</div><p>“${t}”</p><b>${r} · KJV</b><button class="save" style="margin-top:20px">Amen 🙏</button></div>`;
  d.onclick=ev=>{if(ev.target.closest('.vc')&&!ev.target.closest('button'))return;sfx('amen');d.remove()};document.body.appendChild(d)}
-applyBg();render();setInterval(tick,1000);sync();showVerse();
+if(st.swp)u.sw=st.swp;applyBg();render();setInterval(tick,1000);sync();showVerse();checkStock();setInterval(checkStock,3e5);
 </script></body></html>
