@@ -111,7 +111,7 @@ button,.chip{-webkit-user-select:none;user-select:none}
 :root[data-theme="dark"]{--glass:color-mix(in srgb,var(--card) 72%,transparent);--sh:0 12px 30px -16px rgba(0,0,0,.7)}
 body{font-family:"Figtree","Nunito",-apple-system,"Segoe UI",system-ui,sans-serif;background:radial-gradient(120% 50% at 50% -6%,color-mix(in srgb,var(--acc) 38%,var(--bg)) 0%,var(--bg) 62%) fixed,var(--bg);min-height:100vh}
 body::before,body::after{content:"";position:fixed;z-index:-1;border-radius:50%;filter:blur(64px);pointer-events:none;width:240px;height:240px}
-body::before{left:-90px;top:34vh;background:#f6c9ae;opacity:.32}body::after{right:-90px;top:10vh;background:#c9bdf0;opacity:.34}
+body::before{left:-90px;top:34vh;background:var(--b1,#f6c9ae);opacity:.32}body::after{right:-90px;top:10vh;background:var(--b2,#c9bdf0);opacity:.34}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body::before,:root:not([data-theme="light"]) body::after{opacity:.12}}
 :root[data-theme="dark"] body::before,:root[data-theme="dark"] body::after{opacity:.12}
 h1,.big,.h2,.sum>span:first-child,.tile b,.vc b{font-family:var(--disp);letter-spacing:-.02em}
@@ -123,7 +123,7 @@ h1{font-size:22px;font-weight:800}.h2{font-size:18px;font-weight:800}
 .chip.sm{border-radius:999px;padding:9px 12px}
 .chip.on{background:color-mix(in srgb,var(--soft) 85%,transparent);border-color:var(--g2);box-shadow:0 0 0 1px var(--g2) inset;color:var(--accd);font-weight:800}
 .big3 .chip{border-radius:22px}
-.pri,.save{position:relative;overflow:hidden;border:0!important;border-radius:999px!important;background:linear-gradient(100deg,var(--g1) 0%,var(--g2) 55%,var(--g3) 100%)!important;color:#fff!important;font-weight:800;box-shadow:0 14px 28px -12px rgba(43,102,80,.8),inset 0 1px 0 rgba(255,255,255,.35)}
+.pri,.save{position:relative;overflow:hidden;border:0!important;border-radius:999px!important;background:linear-gradient(100deg,var(--g1) 0%,var(--g2) 55%,var(--g3) 100%)!important;color:var(--on,#fff)!important;font-weight:800;box-shadow:0 14px 28px -12px rgba(43,102,80,.8),inset 0 1px 0 rgba(255,255,255,.35)}
 .pri{width:100%;height:56px;font:inherit;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin:0}
 .pri::after,.save::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.38) 50%,transparent 65%);transform:translateX(-130%);pointer-events:none;animation:shn 5s ease-in-out 1.2s infinite}
 @keyframes shn{0%,60%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
@@ -136,27 +136,27 @@ header{background:none;backdrop-filter:none}header::before{display:none}
 header{position:sticky;background:linear-gradient(var(--bg) 60%,transparent)}
 .hb{background:var(--glass);border:1px solid color-mix(in srgb,var(--card) 90%,#fff);box-shadow:var(--sh);color:var(--accd)}
 .hb.av{background:linear-gradient(135deg,#9ccdb3,#e7b99d);color:#1d3b2e;font-family:var(--disp);font-weight:800;border:0}
-.bars i{background:linear-gradient(180deg,#5aa585,var(--g1));border-radius:7px 7px 3px 3px}
+.bars i{background:linear-gradient(180deg,var(--acc),var(--g1));border-radius:7px 7px 3px 3px}
 nav{left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));max-width:432px;margin:0 auto;height:68px;border-radius:34px;border:1px solid color-mix(in srgb,var(--card) 90%,#fff);background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 18px 40px -16px rgba(31,58,47,.5);align-items:center;padding:0 6px}
 nav button{display:flex;flex-direction:column;align-items:center;gap:3px;background:none!important;padding:4px 0;font-size:11px;font-weight:600}
 nav button span{display:grid;place-items:center;width:40px;height:30px;border-radius:15px;font-size:0;transition:background .2s}
 nav button span svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 nav button.on{color:var(--accd);font-weight:800}
-nav button.on span{background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff;box-shadow:0 8px 16px -8px rgba(43,102,80,.9)}
-.fab{bottom:calc(98px + env(safe-area-inset-bottom,0px));width:54px;height:54px;background:linear-gradient(135deg,var(--g2),var(--g1));box-shadow:0 14px 26px -10px rgba(43,102,80,.9),0 0 0 6px rgba(111,176,143,.22)}
+nav button.on span{background:linear-gradient(135deg,var(--g1),var(--g3));color:var(--on,#fff);box-shadow:0 8px 16px -8px rgba(43,102,80,.9)}
+.fab{color:var(--on,#fff);bottom:calc(98px + env(safe-area-inset-bottom,0px));width:54px;height:54px;background:linear-gradient(135deg,var(--g2),var(--g1));box-shadow:0 14px 26px -10px rgba(43,102,80,.9),0 0 0 6px rgba(111,176,143,.22)}
 .fab.live{background:linear-gradient(135deg,var(--g3),#d9795a)}
 .sheet{bottom:calc(96px + env(safe-area-inset-bottom,0px));border-radius:26px;background:var(--glass);backdrop-filter:blur(16px)}
-.toast{bottom:calc(98px + env(safe-area-inset-bottom,0px));border-radius:20px}
+.toast{bottom:calc(98px + env(safe-area-inset-bottom,0px));border-radius:20px;transform:translateY(calc(100% + 160px));opacity:0;visibility:hidden;pointer-events:none;transition:transform .3s,opacity .25s,visibility 0s .3s}.toast.show{transform:none;opacity:1;visibility:visible;pointer-events:auto;transition:transform .3s,opacity .25s}
 .wrap{padding-bottom:170px}
 .drawer{width:min(84vw,330px);border-radius:0 32px 32px 0;background:linear-gradient(180deg,var(--card),var(--bg));padding:calc(18px + env(safe-area-inset-top,0px)) 12px 24px}
-.dh{position:relative;overflow:hidden;margin:calc(-18px - env(safe-area-inset-top,0px)) -12px 8px;padding:calc(26px + env(safe-area-inset-top,0px)) 20px 18px;color:#fff;background:linear-gradient(120deg,var(--g1) 0%,var(--g2) 60%,var(--g3) 140%)}
-.dh::after{content:"";position:absolute;right:-40px;top:-50px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.14)}
-.dh>*{position:relative;z-index:1}.dh .lbl{color:rgba(255,255,255,.92)}.dh b{font-family:var(--disp);font-size:21px!important}
+.dh{position:relative;overflow:hidden;margin:calc(-18px - env(safe-area-inset-top,0px)) -12px 8px;padding:calc(26px + env(safe-area-inset-top,0px)) 20px 18px;color:var(--on,#fff);background:linear-gradient(120deg,var(--g1) 0%,var(--g2) 60%,var(--g3) 140%)}
+.dh::after{content:"";position:absolute;right:-40px;top:-50px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.18)}
+.dh>*{position:relative;z-index:1}.dh .lbl{color:var(--on,#fff);opacity:.88}.dh b{font-family:var(--disp);font-size:21px!important}
 .dav{width:56px;height:56px;flex-basis:56px;background:linear-gradient(135deg,#d9efe2,#f3c8ae);color:#1d3b2e;font-family:var(--disp);box-shadow:0 0 0 3px rgba(255,255,255,.45)}
 .dg{letter-spacing:.12em;font-weight:700}
 .dr{height:48px;border-radius:16px;font-weight:600}.dr.on{background:color-mix(in srgb,var(--soft) 90%,transparent);font-weight:800}
 .di,.ti{border-radius:13px}
-.bdg{background:var(--g3);font-weight:700;min-width:22px;text-align:center}
+.bdg{background:var(--warn);color:#fff;font-weight:700;min-width:22px;text-align:center}
 .ringw{width:272px;height:272px;margin:0 auto}
 .ringw svg{filter:none;overflow:visible}
 .ringw::before{content:"";position:absolute;inset:-8px;border-radius:50%;background:radial-gradient(closest-side,transparent 62%,color-mix(in srgb,var(--acc) 45%,transparent) 84%,transparent 100%);pointer-events:none}
@@ -214,7 +214,7 @@ function desc(e){
  if(e.cat==='use'){const i=itm(e.item)||{};return '➖ Used '+e.qty+' '+(i.unit||'')+' · '+E(i.name||'item')}
  if(e.cat==='growth')return '📏 '+[e.kg&&e.kg+' kg',e.cm&&e.cm+' cm'].filter(Boolean).join(' · ');return '🌙 Slept '+dur(e.end-e.t)}
 function hist(c){const s=new Date();s.setHours(0,0,0,0);const l=live().filter(e=>e.cat===c&&e.t>=s.getTime());return `<div class="card"><div class="sum"><span>Today</span><span>${l.length}</span></div>${l.length?l.map(e=>`<div class="hist"><span class="t">${fmt(e.t)}</span><span class="d">${desc(e)}${e.by&&st.fam?`<br><small style="color:var(--mute)">by ${E(e.by)}</small>`:''}</span><button onclick="editE('${e.id}')" aria-label="Edit">✎</button><button onclick="askDel('${e.id}')" aria-label="Delete">✕</button></div>`).join(''):'<div class="empty">Nothing yet today 🌱</div>'}</div>`}
-const cd=()=>`<div class="card status" id="cd"><div class="lbl" id="sl"></div><div class="ringw"><svg viewBox="0 0 200 200"><defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b6650"/><stop offset=".6" stop-color="#5aa585"/><stop offset="1" stop-color="#e59a74"/></linearGradient><radialGradient id="dk" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="var(--card)"/><stop offset="1" stop-color="var(--soft)"/></radialGradient></defs><circle cx="100" cy="100" r="74" fill="url(#dk)" stroke="var(--card)" stroke-width="2"/><circle cx="100" cy="100" r="88" fill="none" stroke="var(--line)" stroke-width="14"/><circle id="rp" cx="100" cy="100" r="88" fill="none" stroke="url(#gr)" stroke-width="14" stroke-linecap="round" stroke-dasharray="553" stroke-dashoffset="553" transform="rotate(-90 100 100)"/><g id="dot" transform="rotate(0 100 100)"><circle cx="100" cy="12" r="11" fill="var(--card)" stroke="#e59a74" stroke-width="3.5"/><circle cx="100" cy="12" r="4" fill="#e59a74"/></g></svg><div class="ringc"><div class="big" id="sb"></div><div class="lbl" id="sx" style="margin:4px 0 0"></div></div></div></div>`;
+const cd=()=>`<div class="card status" id="cd"><div class="lbl" id="sl"></div><div class="ringw"><svg viewBox="0 0 200 200"><defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--g1)"/><stop offset=".6" style="stop-color:var(--g2)"/><stop offset="1" style="stop-color:var(--g3)"/></linearGradient><radialGradient id="dk" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="var(--card)"/><stop offset="1" stop-color="var(--soft)"/></radialGradient></defs><circle cx="100" cy="100" r="74" fill="url(#dk)" stroke="var(--card)" stroke-width="2"/><circle cx="100" cy="100" r="88" fill="none" stroke="var(--line)" stroke-width="14"/><circle id="rp" cx="100" cy="100" r="88" fill="none" stroke="url(#gr)" stroke-width="14" stroke-linecap="round" stroke-dasharray="553" stroke-dashoffset="553" transform="rotate(-90 100 100)"/><g id="dot" transform="rotate(0 100 100)"><circle cx="100" cy="12" r="11" fill="var(--card)" style="stroke:var(--g3)" stroke-width="3.5"/><circle cx="100" cy="12" r="4" style="fill:var(--g3)"/></g></svg><div class="ringc"><div class="big" id="sb"></div><div class="lbl" id="sx" style="margin:4px 0 0"></div></div></div></div>`;
 const endOf=e=>e.t+(e.secs||0)*1000;
 const hms=ms=>{const x=Math.floor(Math.abs(ms)/1000),p=n=>String(n).padStart(2,'0');return Math.floor(x/3600)+':'+p(Math.floor(x%3600/60))+':'+p(x%60)};
 const swNow=()=>u.sw.acc+(u.sw.run?Date.now()-u.sw.start:0);
@@ -270,7 +270,7 @@ function pSet(){const b=st.baby,ivs=(k,a)=>a.map(([v,l])=>ch(l,st[k]===v,`st.${k
  <div class="sec"><div class="lbl">Remind me before</div><div class="row">${ivs('lead',[[10,'10 min'],[15,'15 min'],[30,'30 min']])}</div></div>
  <div class="sec"><div class="lbl">Partner sync</div>${!DB?'<div class="note">Sync isn’t set up in this copy yet (see README).</div>':st.fam?`<div class="note" id="sy">${E(sMsg)}</div><div class="row" style="margin-top:8px"><button class="chip sm on" onclick="shareFam()">Share invite link</button><button class="chip sm" onclick="leaveFam()">Stop syncing</button></div><div class="note" style="margin-top:6px">Family code: <b>${E(st.fam)}</b></div>`:`<button class="chip sm on" style="width:100%" onclick="newFam()">Create a family</button><div class="row" style="margin-top:8px"><input class="tx" id="jc" placeholder="Or enter family code"><button class="chip sm" onclick="joinFam($('jc').value)">Join</button></div>`}<div class="lbl" style="margin-top:12px">Your name (shown on entries you log)</div><div class="row"><input class="tx" placeholder="e.g. Mum" value="${E(st.me)}" oninput="st.me=this.value;persist()"></div></div>
  <div class="sec"><div class="lbl">Phone push reminders (even when the app is closed)</div>${st.nton?`<div class="note" style="text-align:left">1. Install the free <b>ntfy</b> app (App Store / Play Store).<br>2. In ntfy tap <b>+</b> and subscribe to this topic:<br><b>${E(ntTopic())}</b><br>3. Tap Send test. Your partner subscribes to the same topic.</div><div class="row" style="margin-top:8px">${ch('Send test',0,'ntTest()','sm')}${ch('Copy topic',0,'ntCopy()','sm')}${ch('Turn off',0,'ntToggle()','sm')}</div>`:`<button class="chip sm on" style="width:100%" onclick="ntToggle()">Turn on push reminders</button>`}</div>
- <div class="sec"><div class="lbl">Background colour</div><div class="row" style="gap:10px">${BGS.map(([h,l])=>`<button class="cs ${st.bg===h?'on':''}" style="background:${h}" onclick="setBg('${h}')" aria-label="${l}"></button>`).join('')}<label class="cs cust" aria-label="Custom colour">🎨<input type="color" value="${st.bg||'#faf6f0'}" oninput="setBg(this.value,1)"></label></div><button class="link" onclick="setBg(null)">Match my phone (auto)</button></div>
+ <div class="sec"><div class="lbl">Theme${(THEMES.find(t=>t[0]===st.th)||[0,'Classic'])[1]?' · '+(THEMES.find(t=>t[0]===st.th)||[0,'Classic'])[1]:''}</div><div class="row" style="gap:12px">${THEMES.map(t=>`<button class="cs ${st.th===t[0]?'on':''}" style="background:linear-gradient(135deg,${t[2]},${t[3]},${t[4]});width:46px;height:46px" onclick="setTh('${t[0]}')" aria-label="${t[1]} theme" aria-pressed="${st.th===t[0]}"></button>`).join('')}</div><button class="link" onclick="setTh(null)">Back to the classic look</button></div>
  <div class="sec"><div class="lbl">Sounds, vibration &amp; verse</div><div class="row">${ch('🔔 Sounds '+(st.snd===false?'off':'on'),st.snd!==false,"st.snd=st.snd===false;persist();render()",'sm')}${ch('📳 Haptics '+(st.hap===false?'off':'on'),st.hap!==false,"st.hap=st.hap===false;persist();render()",'sm')}${ch('📖 Verse '+(st.vv===false?'off':'on'),st.vv!==false,"st.vv=st.vv===false;persist();render()",'sm')}${ch('💊 Med alarms '+(st.medr===false?'off':'on'),st.medr!==false,"st.medr=st.medr===false;persist();render();medCheck()",'sm')}</div></div>
  <button class="link" onclick="notifOn(this)">Turn on notifications</button></div>`}
 async function notifOn(b){try{const p=await Notification.requestPermission();b.textContent=p==='granted'?'Notifications on ✓':'Notifications blocked'}catch(e){b.textContent='Notifications unavailable here'}}
@@ -740,6 +740,20 @@ function pPrivacy(){const sy=!!(st.fam&&DB),row=(i,h,t)=>`<div class="hist" styl
  <div class="note" style="margin:6px 0 12px;text-align:left">This is a working draft. A full privacy notice and parental-consent steps will be added before any public release. Little Feeds is a tracker and does not give medical advice.</div>`}
 
 /* ---- background colour ---- */
+const THEMES=[
+['aurora','Aurora','#087a78','#0e8fa0','#4f46e5','#0e8fa0','#087a78','#7fe0d8','#d9f0ef','#c7d2fe','#9ae6dd','#ffffff'],
+['berry','Berry Blaze','#6d1fa0','#c2185b','#e4523d','#c2185b','#a3166a','#f08fc0','#f6e1ee','#ffcfc2','#e3b6f2','#ffffff'],
+['ocean','Ocean Mint','#0b4f8a','#0b8a8f','#1a9a6b','#0b8a8f','#0b5f8f','#7fd3d6','#d9eef2','#c4f1de','#b5d9f2','#ffffff'],
+['cotton','Cotton Candy','#ff8fc7','#c9a6ff','#8fd3ff','#c9a6ff','#7a3fa8','#e0c4ff','#f6e4f6','#d9ccff','#cdeeff','#3a1f47'],
+['peach','Peach Glow','#ffb48a','#ff8fa8','#ff9ee0','#ff8fa8','#b0334f','#ffb3c4','#ffe8e3','#ffd0dc','#ffd6f3','#4a1e24'],
+['lime','Lemon Lime','#ffe66d','#b9f27c','#6fe8b4','#9ddc72','#3f7a1d','#c5f08f','#eaf8d6','#e2fbc2','#c9f7e3','#2f3a0f']];
+function applyTheme(){const r=document.documentElement,t=THEMES.find(x=>x[0]===st.th),K=['--g1','--g2','--g3','--acc','--accd','--soft','--b1','--b2','--on'];
+ if(!t){K.forEach(k=>r.style.removeProperty(k));return}
+ const dk=r.getAttribute('data-theme')==='dark'||(r.getAttribute('data-theme')!=='light'&&matchMedia('(prefers-color-scheme:dark)').matches);
+ const V=['--g1',t[2],'--g2',t[3],'--g3',t[4],'--acc',t[5],'--accd',dk?t[7]:t[6],'--soft',dk?'color-mix(in srgb,'+t[5]+' 24%,#262925)':t[8],'--b1',t[9],'--b2',t[10],'--on',t[11]];
+ for(let i=0;i<V.length;i+=2)r.style.setProperty(V[i],V[i+1])}
+function setTh(k){st.th=k;persist();applyTheme();render()}
+try{matchMedia('(prefers-color-scheme:dark)').addEventListener('change',applyTheme)}catch(e){}
 const BGS=[['#faf6f0','Cream'],['#eaf4ee','Mint'],['#e8f1fa','Sky'],['#fbeceb','Blush'],['#f0ecf8','Lavender'],['#fbf5dc','Butter'],['#fdeee3','Peach'],['#1d1f1c','Night']];
 function applyBg(){const r=document.documentElement,c=st.bg;if(!c){r.removeAttribute('data-theme');r.style.removeProperty('--bg')}else{const n=parseInt(c.slice(1),16),L=(.299*(n>>16)+.587*(n>>8&255)+.114*(n&255))/255;r.setAttribute('data-theme',L<.45?'dark':'light');r.style.setProperty('--bg',c)}
  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=c||'#7fa88f'}
@@ -756,5 +770,5 @@ document.addEventListener('click',ev=>{const b=ev.target.closest&&ev.target.clos
 function showVerse(){if(st.vv===false){medCheck();return}let i=Math.floor(Math.random()*VERSES.length);try{if(i===+localStorage.getItem('lfv'))i=(i+1)%VERSES.length;localStorage.setItem('lfv',i)}catch(e){}
  const [r,t]=VERSES[i],d=document.createElement('div');d.className='vm';d.innerHTML=`<div class="vc"><div style="font-size:34px" class="fl">🕊️</div><p>“${t}”</p><b>${r} · KJV</b><button class="save" style="margin-top:20px">Amen 🙏</button></div>`;
  d.onclick=ev=>{if(ev.target.closest('.vc')&&!ev.target.closest('button'))return;sfx('amen');d.remove();medCheck()};document.body.appendChild(d)}
-if(st.swp)u.sw=st.swp;applyBg();render();setInterval(tick,1000);sync();showVerse();setInterval(medCheck,3e4);setTimeout(pushMeds,4000);document.addEventListener('visibilitychange',()=>{if(!document.hidden){sess={};medCheck()}});checkStock();setInterval(checkStock,3e5);
+if(st.swp)u.sw=st.swp;if(st.bg)st.bg=null;applyBg();applyTheme();render();setInterval(tick,1000);sync();showVerse();setInterval(medCheck,3e4);setTimeout(pushMeds,4000);document.addEventListener('visibilitychange',()=>{if(!document.hidden){sess={};medCheck()}});checkStock();setInterval(checkStock,3e5);
 </script></body></html>
