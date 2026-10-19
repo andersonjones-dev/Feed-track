@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Little Feeds</title>
-<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#7fa88f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><script src="config.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#7fa88f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><script src="config.js"></script>
 <style>
 :root{--bg:#faf6f0;--card:#fffdf9;--ink:#3b3a37;--mute:#8c867c;--line:#eee6da;--acc:#7fa88f;--accd:#5e8a6f;--soft:#e6f0e9;--warm:#f6d9c6;--warn:#c9774f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1f1c;--card:#262925;--ink:#ecebe6;--mute:#9a9a91;--line:#33372f;--accd:#9cc4ab;--soft:#2c3a31;--warm:#4a3a30;--warn:#e29a74}}
@@ -104,6 +104,72 @@ button,.chip{-webkit-user-select:none;user-select:none}
 .vc p{font-family:Georgia,"Times New Roman",serif;font-size:19px;line-height:1.55;margin:10px 0}
 .vc b{color:var(--accd);font-size:14px}
 @keyframes fade{from{opacity:0}}
+
+/* ===== v16 skin: richer, glassy, calm ===== */
+:root{--g1:#2b6650;--g2:#3a8266;--g3:#b95f43;--glass:color-mix(in srgb,var(--card) 78%,transparent);--sh:0 12px 30px -16px rgba(47,100,80,.45);--disp:"Bricolage Grotesque","Nunito",-apple-system,system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--glass:color-mix(in srgb,var(--card) 72%,transparent);--sh:0 12px 30px -16px rgba(0,0,0,.7)}}
+:root[data-theme="dark"]{--glass:color-mix(in srgb,var(--card) 72%,transparent);--sh:0 12px 30px -16px rgba(0,0,0,.7)}
+body{font-family:"Figtree","Nunito",-apple-system,"Segoe UI",system-ui,sans-serif;background:radial-gradient(120% 50% at 50% -6%,color-mix(in srgb,var(--acc) 38%,var(--bg)) 0%,var(--bg) 62%) fixed,var(--bg);min-height:100vh}
+body::before,body::after{content:"";position:fixed;z-index:-1;border-radius:50%;filter:blur(64px);pointer-events:none;width:240px;height:240px}
+body::before{left:-90px;top:34vh;background:#f6c9ae;opacity:.32}body::after{right:-90px;top:10vh;background:#c9bdf0;opacity:.34}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body::before,:root:not([data-theme="light"]) body::after{opacity:.12}}
+:root[data-theme="dark"] body::before,:root[data-theme="dark"] body::after{opacity:.12}
+h1,.big,.h2,.sum>span:first-child,.tile b,.vc b{font-family:var(--disp);letter-spacing:-.02em}
+h1{font-size:22px;font-weight:800}.h2{font-size:18px;font-weight:800}
+.card{background:var(--glass);border:1px solid color-mix(in srgb,var(--card) 90%,#fff);border-radius:26px;box-shadow:var(--sh),inset 0 1px 0 rgba(255,255,255,.6);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.status{background:none!important;border:0!important;box-shadow:none!important;backdrop-filter:none;padding-top:4px}
+.status.soon,.status.over{background:var(--warm)!important}.status.over{border:1px solid var(--warn)!important}
+.chip{border-radius:999px;background:var(--glass);border:1.5px solid color-mix(in srgb,var(--line) 70%,transparent);font-weight:600}
+.chip.sm{border-radius:999px;padding:9px 12px}
+.chip.on{background:color-mix(in srgb,var(--soft) 85%,transparent);border-color:var(--g2);box-shadow:0 0 0 1px var(--g2) inset;color:var(--accd);font-weight:800}
+.big3 .chip{border-radius:22px}
+.pri,.save{position:relative;overflow:hidden;border:0!important;border-radius:999px!important;background:linear-gradient(100deg,var(--g1) 0%,var(--g2) 55%,var(--g3) 100%)!important;color:#fff!important;font-weight:800;box-shadow:0 14px 28px -12px rgba(43,102,80,.8),inset 0 1px 0 rgba(255,255,255,.35)}
+.pri{width:100%;height:56px;font:inherit;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin:0}
+.pri::after,.save::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.38) 50%,transparent 65%);transform:translateX(-130%);pointer-events:none;animation:shn 5s ease-in-out 1.2s infinite}
+@keyframes shn{0%,60%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
+.pri:active,.save:active,.chip:active,.tl:active,.qa button:active{transform:scale(.97)}
+.gh{white-space:nowrap;flex:0 0 auto;background:var(--glass);border:1.5px solid color-mix(in srgb,var(--line) 70%,transparent);border-radius:999px;font:inherit;font-weight:700;color:var(--accd);cursor:pointer;height:56px;padding:0 20px}
+.stepper button{background:var(--soft);border:0;color:var(--accd)}
+.tile{background:color-mix(in srgb,var(--soft) 80%,transparent);border-radius:20px}.tile b{font-size:24px;font-weight:800}
+.grid4 .tile b{font-size:21px}
+header{background:none;backdrop-filter:none}header::before{display:none}
+header{position:sticky;background:linear-gradient(var(--bg) 60%,transparent)}
+.hb{background:var(--glass);border:1px solid color-mix(in srgb,var(--card) 90%,#fff);box-shadow:var(--sh);color:var(--accd)}
+.hb.av{background:linear-gradient(135deg,#9ccdb3,#e7b99d);color:#1d3b2e;font-family:var(--disp);font-weight:800;border:0}
+.bars i{background:linear-gradient(180deg,#5aa585,var(--g1));border-radius:7px 7px 3px 3px}
+nav{left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));max-width:432px;margin:0 auto;height:68px;border-radius:34px;border:1px solid color-mix(in srgb,var(--card) 90%,#fff);background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 18px 40px -16px rgba(31,58,47,.5);align-items:center;padding:0 6px}
+nav button{display:flex;flex-direction:column;align-items:center;gap:3px;background:none!important;padding:4px 0;font-size:11px;font-weight:600}
+nav button span{display:grid;place-items:center;width:40px;height:30px;border-radius:15px;font-size:0;transition:background .2s}
+nav button span svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--accd);font-weight:800}
+nav button.on span{background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff;box-shadow:0 8px 16px -8px rgba(43,102,80,.9)}
+.fab{bottom:calc(98px + env(safe-area-inset-bottom,0px));width:54px;height:54px;background:linear-gradient(135deg,var(--g2),var(--g1));box-shadow:0 14px 26px -10px rgba(43,102,80,.9),0 0 0 6px rgba(111,176,143,.22)}
+.fab.live{background:linear-gradient(135deg,var(--g3),#d9795a)}
+.sheet{bottom:calc(96px + env(safe-area-inset-bottom,0px));border-radius:26px;background:var(--glass);backdrop-filter:blur(16px)}
+.toast{bottom:calc(98px + env(safe-area-inset-bottom,0px));border-radius:20px}
+.wrap{padding-bottom:170px}
+.drawer{width:min(84vw,330px);border-radius:0 32px 32px 0;background:linear-gradient(180deg,var(--card),var(--bg));padding:calc(18px + env(safe-area-inset-top,0px)) 12px 24px}
+.dh{position:relative;overflow:hidden;margin:calc(-18px - env(safe-area-inset-top,0px)) -12px 8px;padding:calc(26px + env(safe-area-inset-top,0px)) 20px 18px;color:#fff;background:linear-gradient(120deg,var(--g1) 0%,var(--g2) 60%,var(--g3) 140%)}
+.dh::after{content:"";position:absolute;right:-40px;top:-50px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.14)}
+.dh>*{position:relative;z-index:1}.dh .lbl{color:rgba(255,255,255,.92)}.dh b{font-family:var(--disp);font-size:21px!important}
+.dav{width:56px;height:56px;flex-basis:56px;background:linear-gradient(135deg,#d9efe2,#f3c8ae);color:#1d3b2e;font-family:var(--disp);box-shadow:0 0 0 3px rgba(255,255,255,.45)}
+.dg{letter-spacing:.12em;font-weight:700}
+.dr{height:48px;border-radius:16px;font-weight:600}.dr.on{background:color-mix(in srgb,var(--soft) 90%,transparent);font-weight:800}
+.di,.ti{border-radius:13px}
+.bdg{background:var(--g3);font-weight:700;min-width:22px;text-align:center}
+.ringw{width:272px;height:272px;margin:0 auto}
+.ringw svg{filter:none;overflow:visible}
+.ringw::before{content:"";position:absolute;inset:-8px;border-radius:50%;background:radial-gradient(closest-side,transparent 62%,color-mix(in srgb,var(--acc) 45%,transparent) 84%,transparent 100%);pointer-events:none}
+.ringc .big{font-size:46px;font-weight:800;color:var(--ink)}
+.status .lbl#sl{font-weight:700;letter-spacing:.04em}
+.tl .ti{border-radius:18px}
+.qa button{border-radius:22px;background:var(--glass);border:1px solid color-mix(in srgb,var(--card) 90%,#fff);box-shadow:var(--sh);padding:12px 2px;font-weight:600}
+.qa span{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--soft);font-size:19px}
+.vc{border-radius:32px;background:var(--glass);backdrop-filter:blur(18px)}
+.vc p{font-size:20px}
+.note{line-height:1.45}
+.pg{animation:pgin .35s cubic-bezier(.2,.8,.2,1)}
+@media (prefers-reduced-motion:reduce){.pri::after,.save::after{animation:none}.pg{animation:none}}
 </style></head>
 <body><div class="wrap"><header id="hd"></header><div id="main"></div></div>
 <button class="fab" id="fab" onclick="vOpen()" aria-label="Voice entry">🎤</button>
@@ -125,6 +191,7 @@ const live=()=>st.log.filter(e=>!e.del);
 function norm(e){if(e.cat==='feed'||e.cat==='pump')e.sides=Array.isArray(e.sides)?e.sides:Object.values(e.sides||{});return e}
 st.log.forEach(e=>{if(!e.u)e.u=e.t||1;norm(e)});
 let u={tab:'home',vg:{},r:'7',set:false,f:{s:[],b:false,fm:true,em:false,mlF:90,mlE:60,ml:90,milk:'formula',via:'bottle'},p:{s:[],ml:60},w:{off:0,c:false,time:''},sw:{run:false,start:0,acc:0}},lastId=null,tt,rec;
+const NAVI={home:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>',feed:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3h4v2l1 2v12a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2V7l1-2z"/><path d="M9 11h6"/></svg>',pump:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg>',diaper:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18v3c0 4-3 8-9 8s-9-4-9-8z"/></svg>',sleep:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>'};
 const TABS=[['home','🏠','Home'],['feed','🍼','Feed'],['pump','💧','Pump'],['diaper','🧷','Diaper'],['sleep','🌙','Sleep']];
 const id=()=>'e'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
 const fmt=t=>new Date(t).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
@@ -147,7 +214,7 @@ function desc(e){
  if(e.cat==='use'){const i=itm(e.item)||{};return '➖ Used '+e.qty+' '+(i.unit||'')+' · '+E(i.name||'item')}
  if(e.cat==='growth')return '📏 '+[e.kg&&e.kg+' kg',e.cm&&e.cm+' cm'].filter(Boolean).join(' · ');return '🌙 Slept '+dur(e.end-e.t)}
 function hist(c){const s=new Date();s.setHours(0,0,0,0);const l=live().filter(e=>e.cat===c&&e.t>=s.getTime());return `<div class="card"><div class="sum"><span>Today</span><span>${l.length}</span></div>${l.length?l.map(e=>`<div class="hist"><span class="t">${fmt(e.t)}</span><span class="d">${desc(e)}${e.by&&st.fam?`<br><small style="color:var(--mute)">by ${E(e.by)}</small>`:''}</span><button onclick="editE('${e.id}')" aria-label="Edit">✎</button><button onclick="askDel('${e.id}')" aria-label="Delete">✕</button></div>`).join(''):'<div class="empty">Nothing yet today 🌱</div>'}</div>`}
-const cd=()=>`<div class="card status" id="cd"><div class="lbl" id="sl"></div><div class="ringw"><svg viewBox="0 0 200 200"><defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7fa88f"/><stop offset="1" stop-color="#f0b48f"/></linearGradient></defs><circle cx="100" cy="100" r="88" fill="none" stroke="var(--line)" stroke-width="12"/><circle id="rp" cx="100" cy="100" r="88" fill="none" stroke="url(#gr)" stroke-width="12" stroke-linecap="round" stroke-dasharray="553" stroke-dashoffset="553" transform="rotate(-90 100 100)"/><g id="dot" transform="rotate(0 100 100)"><circle cx="100" cy="12" r="8" fill="var(--card)" stroke="var(--acc)" stroke-width="4"/></g></svg><div class="ringc"><div class="big" id="sb"></div><div class="lbl" id="sx" style="margin:4px 0 0"></div></div></div></div>`;
+const cd=()=>`<div class="card status" id="cd"><div class="lbl" id="sl"></div><div class="ringw"><svg viewBox="0 0 200 200"><defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b6650"/><stop offset=".6" stop-color="#5aa585"/><stop offset="1" stop-color="#e59a74"/></linearGradient><radialGradient id="dk" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="var(--card)"/><stop offset="1" stop-color="var(--soft)"/></radialGradient></defs><circle cx="100" cy="100" r="74" fill="url(#dk)" stroke="var(--card)" stroke-width="2"/><circle cx="100" cy="100" r="88" fill="none" stroke="var(--line)" stroke-width="14"/><circle id="rp" cx="100" cy="100" r="88" fill="none" stroke="url(#gr)" stroke-width="14" stroke-linecap="round" stroke-dasharray="553" stroke-dashoffset="553" transform="rotate(-90 100 100)"/><g id="dot" transform="rotate(0 100 100)"><circle cx="100" cy="12" r="11" fill="var(--card)" stroke="#e59a74" stroke-width="3.5"/><circle cx="100" cy="12" r="4" fill="#e59a74"/></g></svg><div class="ringc"><div class="big" id="sb"></div><div class="lbl" id="sx" style="margin:4px 0 0"></div></div></div></div>`;
 const endOf=e=>e.t+(e.secs||0)*1000;
 const hms=ms=>{const x=Math.floor(Math.abs(ms)/1000),p=n=>String(n).padStart(2,'0');return Math.floor(x/3600)+':'+p(Math.floor(x%3600/60))+':'+p(x%60)};
 const swNow=()=>u.sw.acc+(u.sw.run?Date.now()-u.sw.start:0);
@@ -247,7 +314,7 @@ function askDel(i){if(confirm('Delete this entry? It will also be removed on you
 function undo(){if(lastId)delE(lastId);$('toast').classList.remove('show')}
 function toast(m,ent){$('tmsg').textContent=(ent?'Saved · ':'')+m;$('toast').querySelector('button').style.display=ent?'':'none';$('toast').classList.add('show');clearTimeout(tt);tt=setTimeout(()=>$('toast').classList.remove('show'),5000)}
 function burst(){['🍼','💛','⭐','🫧','🌙','🧸'].forEach((c,i)=>{const s=document.createElement('span');s.className='bu';s.textContent=c;s.style.left=(12+Math.random()*70)+'%';s.style.animationDelay=i*70+'ms';document.body.appendChild(s);setTimeout(()=>s.remove(),1600)})}
-function render(){head();$('tabs').innerHTML=TABS.map(([k,i,l])=>`<button class="${u.tab===k?'on':''}" onclick="goTab('${k}')"><span>${i}</span>${l}</button>`).join('');$('main').innerHTML=alertBar()+(PAGES[u.tab]||pHome)();tick()}
+function render(){head();$('tabs').innerHTML=TABS.map(([k,i,l])=>`<button class="${u.tab===k?'on':''}" onclick="goTab('${k}')" ${u.tab===k?'aria-current="page"':''}><span>${NAVI[k]||i}</span>${l}</button>`).join('');$('main').innerHTML=alertBar()+(PAGES[u.tab]||pHome)();tick()}
 function tick(){const now=Date.now();
  if(u.tab==='feed'||u.tab==='pump'||u.tab==='home'){const c=u.tab==='home'?'feed':u.tab,ses=(u.sw.run||u.sw.acc>0)&&u.sw.cat===c&&!u.edit,l=live().find(e=>e.cat===c),iv=(c==='feed'?st.fi:st.pi)*6e4,box=$('cd');if(box){
   let frac=0,txt='--:--:--',lb=c==='feed'?'No feeds yet':'No pumping yet',sx='Log the first one below',cls='card status',col='url(#gr)';
@@ -323,7 +390,7 @@ try{const j=new URLSearchParams(location.search).get('join');if(j&&DB){const c=j
 addEventListener('online',()=>{head();sync()});addEventListener('offline',head);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync()});
 setInterval(()=>{if(!document.hidden)sync()},15000);
-if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+if('serviceWorker' in navigator){const had=!!navigator.serviceWorker.controller;let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had&&!rl){rl=1;location.reload()}});navigator.serviceWorker.register('sw.js').then(r=>r.update()).catch(()=>{})}
 /* ---- phone push reminders via ntfy.sh ---- */
 const NT='https://ntfy.sh',rnd=()=>{const a=new Uint8Array(16);crypto.getRandomValues(a);return[...a].map(x=>'abcdefghjkmnpqrstuvwxyz23456789'[x%31]).join('')};
 const ntTopic=()=>'lf-'+(st.fam||st.ntq||'');
@@ -539,8 +606,8 @@ function upRows(){const R=[],vs=vaxSummary(),md=medsOn()?dueDoses(1):[],L=live()
 function pHome(){const h=new Date().getHours(),gr=h<5?'Good night':h<12?'Good morning':h<17?'Good afternoon':'Good evening',me=st.me?', '+E(st.me):'',s0=new Date();s0.setHours(0,0,0,0);
  const T=live().filter(e=>e.t>=s0.getTime()&&TRK.includes(e.cat)),fd=T.filter(e=>e.cat==='feed'),ml=fd.reduce((a,e)=>{const m=mlOf(e);return a+m.f+m.x+m.b},0),dp=T.filter(e=>e.cat==='diaper').length,sl=T.filter(e=>e.cat==='sleep').reduce((a,e)=>a+(e.end-e.t)/36e5,0);
  const tl=(k,l)=>`<button class="tl" onclick="goTab('${k}')"><span class="ti" style="--tc:${TINT[k]}">${ICON[k]}</span>${l}</button>`,q=(i,l,js)=>`<button onclick="${js}"><span>${i}</span>${l}</button>`;
- return `<div class="lbl" style="margin:2px 2px 0">${new Date().toLocaleDateString([],{weekday:'long',day:'numeric',month:'long'})}</div><div style="font-size:24px;font-weight:700;margin:0 2px 12px">${gr}${me} 👋</div>${cd()}
- <div class="row" style="margin:-4px 0 14px"><button class="chip on" onclick="vStart('feed',[])">▶ Start feed timer</button><button class="chip" onclick="goTab('feed')">+ Log a feed</button></div>
+ return `<div class="lbl" style="margin:2px 2px 0">${new Date().toLocaleDateString([],{weekday:'long',day:'numeric',month:'long'})}</div><div class="h1d" style="font-family:var(--disp);font-size:26px;font-weight:800;letter-spacing:-.02em;margin:0 2px 8px">${gr}${me} 👋</div>${cd()}
+ <div class="row" style="margin:0 0 14px;flex-wrap:nowrap"><button class="pri" onclick="vStart('feed',[])">▶ Start feed timer</button><button class="gh" onclick="goTab('feed')">+ Log</button></div>
  <div class="card"><div class="lbl">Quick log</div><div class="qa">${q('🍼','Feed',"goTab('feed')")}${q('💧','Pump',"goTab('pump')")}${q('💧','Wet',"quickDia('wet')")}${q('💩','Dirty',"quickDia('dirty')")}${q('🌙','Sleep',"goTab('sleep')")}</div></div>
  <div class="card"><div class="sum"><span>Today</span><button class="link" style="margin:0" onclick="goTab('ins')">Insights →</button></div><div class="grid4">${tile('🍼',fd.length,'feeds')}${tile('🥛',Math.round(ml),'mL fed')}${tile('🧷',dp,'diapers')}${tile('🌙',+sl.toFixed(1),'h sleep')}</div></div>
  <div class="card"><div class="sum"><span>Coming up</span></div>${upRows().map(([i,t,go,k])=>`<button class="up" onclick="goTab('${go}')"><span class="ti" style="--tc:${TINT[k]}">${i}</span><span class="d">${t}</span><span style="color:var(--mute)">›</span></button>`).join('')}</div>
