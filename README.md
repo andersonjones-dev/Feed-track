@@ -32,4 +32,4 @@
 - Anyone with the family code can read/write that family's log, so only share the link with people you trust. Codes are long and random.
 - Reminders fire only while the app is open. On iPhone, notifications need iOS 16.4+ and the app added to the Home Screen.
 - Voice entry may not work in the Home Screen app on iPhone; Safari works better, and you can always type the sentence instead.
-- After editing any file, change `V` in `sw.js` so phones fetch the update.
+- After editing any file, change `VERSION` in `sw.js`. Phones then show "A new version of Little Feeds is ready" with an **Update** button (`update.js`); nothing changes until it’s tapped.

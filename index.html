@@ -394,7 +394,7 @@ try{const j=new URLSearchParams(location.search).get('join');if(j&&DB){const c=j
 addEventListener('online',()=>{head();sync()});addEventListener('offline',head);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync()});
 setInterval(()=>{if(!document.hidden)sync()},15000);
-if('serviceWorker' in navigator){const had=!!navigator.serviceWorker.controller;let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had&&!rl){rl=1;location.reload()}});navigator.serviceWorker.register('sw.js').then(r=>r.update()).catch(()=>{})}
+/* Offline support and the update bar are handled by update.js */
 /* ---- phone push reminders via ntfy.sh ---- */
 const NT='https://ntfy.sh',rnd=()=>{const a=new Uint8Array(16);crypto.getRandomValues(a);return[...a].map(x=>'abcdefghjkmnpqrstuvwxyz23456789'[x%31]).join('')};
 const ntTopic=()=>'lf-'+(st.fam||st.ntq||'');
@@ -779,4 +779,5 @@ function showVerse(){if(st.vv===false){medCheck();return}let i=Math.floor(Math.r
  const [r,t]=VERSES[i],d=document.createElement('div');d.className='vm';d.innerHTML=`<div class="vc"><div style="font-size:34px" class="fl">🕊️</div><p>“${t}”</p><b>${r} · KJV</b><button class="save" style="margin-top:20px">Amen 🙏</button></div>`;
  d.onclick=ev=>{if(ev.target.closest('.vc')&&!ev.target.closest('button'))return;sfx('amen');d.remove();medCheck()};document.body.appendChild(d)}
 if(st.swp)u.sw=st.swp;if(st.bg){st.bg=null;persist()}applyBg();render();setInterval(tick,1000);sync();showVerse();setInterval(medCheck,3e4);setTimeout(pushMeds,4000);document.addEventListener('visibilitychange',()=>{if(!document.hidden){sess={};medCheck()}});checkStock();setInterval(checkStock,3e5);
-</script></body></html>
+</script><script src="update.js" data-app="Little Feeds"></script>
+</body></html>
