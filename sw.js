@@ -8,7 +8,7 @@
  *
  * The app always opens from the saved copy, so it works with no internet.
  */
-const VERSION = 'little-feeds-v22';
+const VERSION = 'little-feeds-v23';
 const PREFIX = 'little-feeds-';   // only caches starting with this are ever deleted: other apps share this storage
 const LIB = 'little-feeds-lib';         // fonts and libraries from other sites, kept between versions
 const KEEP = [];

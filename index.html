@@ -3,8 +3,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Little Feeds</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#7fa88f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><script src="config.js"></script>
-<style>
-:root{--bg:#faf6f0;--card:#fffdf9;--ink:#3b3a37;--mute:#8c867c;--line:#eee6da;--acc:#7fa88f;--accd:#5e8a6f;--soft:#e6f0e9;--warm:#f6d9c6;--warn:#c9774f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+<style>/* Bottom spacing (same in all of Anderson's apps; ClockIt 2.4.1, checked on an iPhone 12).
+   --safe-b is the home-bar space, reduced by however much iOS has made a Home Screen
+   app's window short (it then already ends above the home bar). CSS only: no height
+   measuring code, which made iOS shrink the window and the layout jump. */
+:root{--safe-b:env(safe-area-inset-bottom,0px)}
+@supports (height:100lvh){:root{--safe-b:max(0px,calc(env(safe-area-inset-bottom,0px) - clamp(0px,100lvh - 100dvh,60px)))}}
+/* Double tap never zooms (pinch zoom still works, so text can be enlarged). */
+:where(html,body,*){touch-action:manipulation}
+
+:root{--bg:#faf6f0;--card:#fffdf9;--ink:#3b3a37;--mute:#8c867c;--line:#eee6da;--acc:#7fa88f;--accd:#5e8a6f;--soft:#e6f0e9;--warm:#f6d9c6;--warn:#c9774f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:var(--safe-b)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1f1c;--card:#262925;--ink:#ecebe6;--mute:#9a9a91;--line:#33372f;--accd:#9cc4ab;--soft:#2c3a31;--warm:#4a3a30;--warn:#e29a74}}
 :root[data-theme="dark"]{--bg:#1d1f1c;--card:#262925;--ink:#ecebe6;--mute:#9a9a91;--line:#33372f;--accd:#9cc4ab;--soft:#2c3a31;--warm:#4a3a30;--warn:#e29a74}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -46,13 +54,13 @@ input[type=time],.tx{font:inherit;padding:10px;border-radius:12px;border:1.5px s
 .tile{background:var(--soft);border-radius:16px;padding:10px;text-align:center}.tile b{display:block;font-size:22px}.tile small{font-size:11px;color:var(--mute)}
 .bars{display:flex;gap:6px;align-items:flex-end;height:140px;overflow-x:auto}.bars div{flex:1;min-width:34px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:3px}
 .bars i{display:block;width:100%;background:var(--acc);border-radius:6px 6px 2px 2px;min-height:2px}.bars small{font-size:11px;color:var(--mute)}
-nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px 4px calc(6px + var(--safe-b))}
 nav button{background:none;border:0;color:var(--mute);font:inherit;font-size:10px;padding:4px 2px;cursor:pointer;border-radius:12px}
 nav button span{display:block;font-size:22px}nav button.on{color:var(--accd);font-weight:700;background:var(--soft)}
-.fab{position:fixed;right:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;border:0;background:var(--acc);color:#fff;font-size:24px;box-shadow:0 4px 14px rgba(0,0,0,.2);cursor:pointer}
-.sheet{position:fixed;left:12px;right:12px;bottom:calc(80px + env(safe-area-inset-bottom,0px));max-width:436px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:0 6px 24px rgba(0,0,0,.18)}
+.fab{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(84px + var(--safe-b));width:56px;height:56px;border-radius:50%;border:0;background:var(--acc);color:#fff;font-size:24px;box-shadow:0 4px 14px rgba(0,0,0,.2);cursor:pointer}
+.sheet{position:fixed;left:12px;right:12px;bottom:calc(80px + var(--safe-b));max-width:436px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:0 6px 24px rgba(0,0,0,.18)}
 .sheet textarea{width:100%;font:inherit;border:1.5px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px;background:var(--bg);color:var(--ink)}
-.toast{position:fixed;left:16px;right:16px;bottom:calc(150px + env(safe-area-inset-bottom,0px));max-width:428px;margin:0 auto;background:var(--ink);color:var(--bg);border-radius:16px;padding:12px 16px;display:flex;justify-content:space-between;gap:10px;font-size:14px;transform:translateY(300%);transition:transform .3s}
+.toast{position:fixed;left:16px;right:16px;bottom:calc(150px + var(--safe-b));max-width:428px;margin:0 auto;background:var(--ink);color:var(--bg);border-radius:16px;padding:12px 16px;display:flex;justify-content:space-between;gap:10px;font-size:14px;transform:translateY(300%);transition:transform .3s}
 .toast.show{transform:none}.toast button{background:none;border:0;color:var(--bg);font:inherit;font-weight:700;text-decoration:underline}
 .bu{position:fixed;bottom:130px;font-size:26px;pointer-events:none;animation:up 1.2s ease-out both}
 @keyframes up{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-160px) scale(1.4)}}
@@ -108,7 +116,7 @@ button,.chip{-webkit-user-select:none;user-select:none}
 .ht h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style><style id="skin">
 /* ===== v16 skin: richer, glassy, calm ===== */
-:root{--nb:max(8px,calc(env(safe-area-inset-bottom,0px) - 20px));--g1:#2b6650;--g2:#3a8266;--g3:#b95f43;--glass:color-mix(in srgb,var(--card) 78%,transparent);--sh:0 12px 30px -16px rgba(47,100,80,.45);--disp:"Bricolage Grotesque","Nunito",-apple-system,system-ui,sans-serif}
+:root{--nb:max(8px,calc(var(--safe-b) - min(20px,max(0px,calc((var(--safe-b) - 26px) * 5)),max(0px,calc((38px - var(--safe-b)) * 5)))));--g1:#2b6650;--g2:#3a8266;--g3:#b95f43;--glass:color-mix(in srgb,var(--card) 78%,transparent);--sh:0 12px 30px -16px rgba(47,100,80,.45);--disp:"Bricolage Grotesque","Nunito",-apple-system,system-ui,sans-serif}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--glass:color-mix(in srgb,var(--card) 72%,transparent);--sh:0 12px 30px -16px rgba(0,0,0,.7)}}
 :root[data-theme="dark"]{--glass:color-mix(in srgb,var(--card) 72%,transparent);--sh:0 12px 30px -16px rgba(0,0,0,.7)}
 body{font-family:"Figtree","Nunito",-apple-system,"Segoe UI",system-ui,sans-serif;background:radial-gradient(120% 50% at 50% -6%,color-mix(in srgb,var(--acc) 38%,var(--bg)) 0%,var(--bg) 62%) fixed,var(--bg);min-height:100vh}
@@ -762,7 +770,7 @@ try{matchMedia('(prefers-color-scheme:dark)').addEventListener('change',applyThe
 const BGS=[['#faf6f0','Cream'],['#eaf4ee','Mint'],['#e8f1fa','Sky'],['#fbeceb','Blush'],['#f0ecf8','Lavender'],['#fbf5dc','Butter'],['#fdeee3','Peach'],['#1d1f1c','Night']];
 const isDark=()=>{const t=document.documentElement.getAttribute('data-theme');return t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme:dark)').matches)};
 function applyBg(){const r=document.documentElement;r.style.removeProperty('--bg');if(st.mode)r.setAttribute('data-theme',st.mode);else r.removeAttribute('data-theme');
- const m=document.querySelector('meta[name=theme-color]');if(m)m.content=isDark()?'#1d1f1c':'#7fa88f';applyTheme()}
+ const m=document.querySelector('meta[name=theme-color]'),tc=isDark()?'#1d1f1c':'#7fa88f';if(m&&m.content!==tc)m.content=tc;applyTheme()}
 function setMode(m){st.mode=m;persist();applyBg();render()}
 function toggleMode(){setMode(isDark()?'light':'dark')}
 function setBg(c,quiet){st.bg=c;persist();applyBg();if(!quiet)render()}
