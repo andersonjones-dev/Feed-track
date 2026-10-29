@@ -601,7 +601,7 @@ function drawerHtml(){const b=st.baby,vs=vaxSummary(),md=medsOn()?dueDoses(1).le
  <div class="dg">Health &amp; growth</div>${it('growth','Growth')}${it('vax','Vaccines',vs.dueNow.length||'')}${it('ms','Milestones')}${it('meds','Medicines',md||'')}${it('rx','Prescriptions')}
  <div class="dg">Insights &amp; supplies</div>${it('ins','Insights')}${it('shop','Shop &amp; supplies',sa||'')}
  <div class="dg">App</div>${it('settings','Settings')}${it('privacy','Privacy &amp; data')}
- <div class="note" style="margin-top:18px;text-align:left">${st.fam&&DB?(navigator.onLine?'☁️ Synced with your family':'📴 Offline · will sync later'):'Sync is off'}<br>Little Feeds is a tracker, not medical advice.</div>`}
+ <div class="note" style="margin-top:18px;text-align:left">${st.fam&&DB?(navigator.onLine?'☁️ Synced with your family':'📴 Offline · will sync later'):'Sync is off'}<br>Little Feeds is a tracker, not medical advice.</div>${window.AppAbout?AppAbout.linkHTML():''}`}
 function drawer(o){const d=$('drawer'),s=$('scrim');if(o)d.innerHTML=drawerHtml();d.classList.toggle('on',!!o);s.classList.toggle('on',!!o);d.setAttribute('aria-hidden',o?'false':'true');document.body.style.overflow=o?'hidden':''}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')drawer(0)});
 function quickDia(k){add({id:id(),cat:'diaper',t:Date.now(),kind:k})}
@@ -787,5 +787,6 @@ function showVerse(){if(st.vv===false){medCheck();return}let i=Math.floor(Math.r
  const [r,t]=VERSES[i],d=document.createElement('div');d.className='vm';d.innerHTML=`<div class="vc"><div style="font-size:34px" class="fl">🕊️</div><p>“${t}”</p><b>${r} · KJV</b><button class="save" style="margin-top:20px">Amen 🙏</button></div>`;
  d.onclick=ev=>{if(ev.target.closest('.vc')&&!ev.target.closest('button'))return;sfx('amen');d.remove();medCheck()};document.body.appendChild(d)}
 if(st.swp)u.sw=st.swp;if(st.bg){st.bg=null;persist()}applyBg();render();setInterval(tick,1000);sync();showVerse();setInterval(medCheck,3e4);setTimeout(pushMeds,4000);document.addEventListener('visibilitychange',()=>{if(!document.hidden){sess={};medCheck()}});checkStock();setInterval(checkStock,3e5);
-</script><script src="update.js" data-app="Little Feeds"></script>
+</script><script src="about.js" data-app="Little Feeds" data-desc="A calm log for new parents: feeds, pumping, diapers and sleep, with reminders and sync with your partner." data-fine="Little Feeds is a tracker, not medical advice. Always follow your doctor’s or nurse’s guidance. Bible verses are from the King James Version (public domain)."></script>
+<script src="update.js" data-app="Little Feeds"></script>
 </body></html>
